@@ -1,0 +1,113 @@
+flask: &flask
+  host: 0.0.0.0
+  port: 3399
+  threaded: true
+  debug: true
+
+flask-config: &flask-config
+  SECRET_KEY: ray-iam
+  PERMANENT_SESSION_LIFETIME: 1
+
+hash: &hash
+  hash_type: sha512
+  salt: ray-iam
+  iterations: 9
+
+database: &database
+  scheme: mysql+pymysql
+  user: root
+  password: asd123
+  host: 127.0.0.1
+  port: 3306
+  db: ray_iam
+  charset: utf8mb4
+
+cache: &cache
+  serialize: pickle
+  redis: &redis
+    password: null
+    host: 127.0.0.1
+    port: 6379
+    auth-db:
+      db: 9
+      ex: 86400
+      px: null
+      nx: null
+      xx: null
+    user-db:
+      db: 10
+      ex: 3600
+      px: null
+      nx: null
+      xx: null
+  mongodb: &mongodb
+    host: 127.0.0.1
+    port: 27017
+
+
+environment-product:
+  flask:
+    debug: false
+    <<: *flask
+  flask-config:
+    SECRET_KEY: ray-iam
+    <<: *flask-config
+  hash:
+    <<: *hash
+  database:
+    scheme: mysql+pymysql
+    user: root
+    password: asd123
+    host: 127.0.0.1
+    port: 3306
+    <<: *database
+  cache:
+    redis:
+      password: null
+      host: 127.0.0.1
+      port: 6379
+      <<: *redis
+    mongodb:
+      host: 127.0.0.1
+      port: 27017
+      <<: *mongodb
+    <<: *cache
+
+environment-development:
+  flask:
+    <<: *flask
+  flask-config:
+    <<: *flask-config
+  hash:
+    <<: *hash
+  database:
+    <<: *database
+  cache:
+    <<: *cache
+
+environment-test:
+  flask:
+    debug: false
+    <<: *flask
+  flask-config:
+    <<: *flask-config
+  hash:
+    <<: *hash
+  database:
+    scheme: mysql+pymysql
+    user: root
+    password: asd123
+    host: 127.0.0.1
+    port: 3306
+    <<: *database
+  cache:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      <<: *redis
+    mongodb:
+      host: 127.0.0.1
+      port: 27017
+      <<: *mongodb
+    <<: *cache
+
