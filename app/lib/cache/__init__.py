@@ -12,41 +12,19 @@ class Cache(Redis):
         serialize = pickle
 
     @classmethod
-    def cache_auth_redis(cls, name):
+    def cache_redis(cls, name, args_name, serial=True):
+        _redis = getattr(cls, f"{name}_redis")
+        _redis_config = getattr(cls, f"{name}_redis_config")
         def cache_action(func):
             @wraps(func)
             def action(*args, **kwargs):
-                if not (_return:=cls.auth_redis_get(name)):
-                    if _return:=func(*args, **kwargs):
-                        cls.auth_redis_set(name, _return)
-                return _return
-            return action
-        return cache_action
-
-    @classmethod
-    def cache_user_redis(cls, name):
-        def cache_action(func):
-            @wraps(func)
-            def action(*args, **kwargs):
-                if _return:=cls.user_redis_get(name):
-                    _return = cls.serialize.loads(_return)
+                args_value = args[co_varnames.index(args_name)] if (co_varnames:=func.__code__.co_varnames) and args_name in co_varnames else kwargs.get(args_name)
+                if _return:=_redis.get(args_value):
+                    if serial:
+                        _return = cls.serialize.loads(_return)
                 else:
                     if _return:=func(*args, **kwargs):
-                        cls.user_redis_set(name, cls.serialize.dumps(_return))
-                return _return
-            return action
-        return cache_action
-
-    @classmethod
-    def cache_project_redis(cls, name):
-        def cache_action(func):
-            @wraps(func)
-            def action(*args, **kwargs):
-                if _return:=cls.project_redis_get(name):
-                    _return = cls.serialize.loads(_return)
-                else:
-                    if _return:=func(*args, **kwargs):
-                        cls.project_redis_set(name, cls.serialize.dumps(_return))
+                        _redis.set(args_value, cls.serialize.dumps(_return) if serial else _return, ex=_redis_config["ex"])
                 return _return
             return action
         return cache_action

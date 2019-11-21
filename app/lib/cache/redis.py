@@ -14,39 +14,3 @@ class Redis:
     project_pool = redis.ConnectionPool(password=redis_config["password"], host=redis_config["host"], port=redis_config["port"], db=project_redis_config["db"])
     project_redis = redis.Redis(connection_pool=project_pool)
 
-    @classmethod
-    def auth_redis_set(cls, name, value):
-        return cls.auth_redis.set(name, value, ex=cls.auth_redis_config["ex"])
-
-    @classmethod
-    def auth_redis_get(cls, name):
-        return cls.auth_redis.get(name)
-
-    @classmethod
-    def auth_redis_delete(cls, name):
-        return cls.auth_redis.delete(name)
-
-    @classmethod
-    def user_redis_set(cls, name, value):
-        return cls.user_redis.set(name, value, ex=cls.user_redis_config["ex"])
-
-    @classmethod
-    def user_redis_get(cls, name):
-        return cls.user_redis.get(name)
-
-    @classmethod
-    def user_redis_delete(cls, name):
-        return cls.user_redis.delete(name)
-
-    @classmethod
-    def project_redis_set(cls, name, value):
-        return cls.project_redis.set(name, value, ex=cls.project_redis_config["ex"])
-
-    @classmethod
-    def project_redis_get(cls, name):
-        return cls.project_redis.get(name)
-
-    @classmethod
-    def project_redis_delete(cls, name):
-        return cls.project_redis.delete(name)
-
