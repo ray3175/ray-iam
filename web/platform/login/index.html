@@ -1,10 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../../common/ico/snow.ico">
+    <title>ray-iam</title>
 </head>
 <body>
-
+    <div id="login">
+        <Login :user="user" :password="password"></Login>
+    </div>
 </body>
+<script src="../../common/js/vue-2.6.10.min.js"></script>
+<script src="../../common/js/axios-0.19.0.min.js"></script>
+<script type="module" src="./index.js"></script>
 </html>

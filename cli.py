@@ -1,13 +1,6 @@
 import click
 from flask.cli import FlaskGroup
-from xy.common.global_data import GlobalData
 from app import create_app
-
-
-def __get_env(env):
-    if env == "dev":
-        env = "development"
-    return f"environment-{env}"
 
 
 def __init_db():
@@ -27,10 +20,8 @@ def cli():
 
 
 @cli.command()
-@click.option("--env", default="dev")
 @click.option("--super_admin/--no_super_admin", default=False)
-def db_init(env, super_admin):
-    GlobalData()["environment"] = __get_env(env)
+def db_init(super_admin):
     print("正在初始化数据库！")
     init_db = __init_db()
     init_db.create_db()
@@ -40,9 +31,7 @@ def db_init(env, super_admin):
 
 
 @cli.command()
-@click.option("--env", default="dev")
-def db_drop(env):
-    GlobalData()["environment"] = __get_env(env)
+def db_drop():
     print("正在删除数据库！")
     init_db = __init_db()
     init_db.drop_db()
@@ -50,9 +39,7 @@ def db_drop(env):
 
 
 @cli.command()
-@click.option("--env", default="dev")
-def add_super_admin(env):
-    GlobalData()["environment"] = __get_env(env)
+def add_super_admin():
     init_db = __init_db()
     __add_super_admin(init_db)
 

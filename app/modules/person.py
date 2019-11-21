@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, BigInteger
+from sqlalchemy import Column, String, BigInteger, Boolean
 from ..lib.database.base import Base
 
 
@@ -13,4 +13,5 @@ class Person(Base):
     birth_place = Column(String(32), comment="出生地")
     native_place = Column(String(32), comment="籍贯")
     nationality = Column(String(32), comment="名族")
+    xy = Column(Boolean, default=True, comment="软删除")
 

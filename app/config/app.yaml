@@ -6,7 +6,8 @@ flask: &flask
 
 flask-config: &flask-config
   SECRET_KEY: ray-iam
-  PERMANENT_SESSION_LIFETIME: 1
+  PERMANENT_SESSION_LIFETIME:
+    days: 1
 
 hash: &hash
   hash_type: sha512
@@ -16,7 +17,7 @@ hash: &hash
 database: &database
   scheme: mysql+pymysql
   user: root
-  password: asd123
+  password: 123456
   host: 127.0.0.1
   port: 3306
   db: ray_iam
@@ -31,15 +32,12 @@ cache: &cache
     auth-db:
       db: 9
       ex: 86400
-      px: null
-      nx: null
-      xx: null
     user-db:
       db: 10
       ex: 3600
-      px: null
-      nx: null
-      xx: null
+    project-db:
+      db: 11
+      ex: 86400
   mongodb: &mongodb
     host: 127.0.0.1
     port: 27017
@@ -57,7 +55,7 @@ environment-product:
   database:
     scheme: mysql+pymysql
     user: root
-    password: asd123
+    password: 123456
     host: 127.0.0.1
     port: 3306
     <<: *database
@@ -96,7 +94,7 @@ environment-test:
   database:
     scheme: mysql+pymysql
     user: root
-    password: asd123
+    password: 123456
     host: 127.0.0.1
     port: 3306
     <<: *database

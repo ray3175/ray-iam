@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, String, BigInteger
+from sqlalchemy import Column, ForeignKey, String, BigInteger, Boolean
 from sqlalchemy.orm import relationship
 from ..lib.database.base import Base
 
@@ -11,5 +11,6 @@ class User(Base):
     password = Column(String(64), nullable=False, comment="用户密码")
     person_id = Column(BigInteger, ForeignKey("person.id", ondelete="SET NULL"), index=True, comment="用户ID")
     person = relationship("Person", backref="user_from_person")
+    xy = Column(Boolean, default=True, comment="软删除")
 
 
