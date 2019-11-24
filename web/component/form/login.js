@@ -1,4 +1,5 @@
-import { postLogin } from "../../api/default/login.js"
+import "../../utils/sweetalert/sweetalert-dev.js";
+import { postLogin } from "../../api/default/login.js";
 
 
 var formLogin = {

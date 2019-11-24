@@ -1,3 +1,6 @@
+@import "../../utils/sweetalert/sweetalert.css";
+
+
 .form-login {
     position: relative;
 }
