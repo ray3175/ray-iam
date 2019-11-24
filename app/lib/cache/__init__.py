@@ -14,7 +14,6 @@ class Cache(Redis):
     @classmethod
     def cache_redis(cls, name, args_name, serial=True):
         _redis = getattr(cls, f"{name}_redis")
-        _redis_config = getattr(cls, f"{name}_redis_config")
         def cache_action(func):
             @wraps(func)
             def action(*args, **kwargs):
@@ -24,7 +23,7 @@ class Cache(Redis):
                         _return = cls.serialize.loads(_return)
                 else:
                     if _return:=func(*args, **kwargs):
-                        _redis.set(args_value, cls.serialize.dumps(_return) if serial else _return, ex=_redis_config["ex"])
+                        _redis.set(args_value, cls.serialize.dumps(_return) if serial else _return, ex=getattr(cls, f"{name}_redis_config")["ex"])
                 return _return
             return action
         return cache_action

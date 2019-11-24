@@ -1,4 +1,6 @@
+from flask import session
 from ...lib.flask.redirect import redirect_to_endpoint, redirect_to_source
+from ...service import Service
 from .. import default_blueprint
 
 
@@ -9,7 +11,7 @@ def _index():
 
 @default_blueprint.route("/index", methods=["GET"])
 def index():
-    if not 0:
-        return redirect_to_source("./platform/login/index.html")
-    return redirect_to_source("./platform/index.html")
+    if Service.ray_iam_auth(session.get("user"), session.get("password")):
+        return redirect_to_source("./platform/index.html")
+    return redirect_to_source("./platform/login/index.html")
 

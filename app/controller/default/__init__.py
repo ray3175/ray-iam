@@ -1,4 +1,7 @@
 __all__ = [
     "index",
-    "login"
+    "login",
+    "logout"
 ]
+
+

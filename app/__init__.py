@@ -11,6 +11,7 @@ def init_app():
     from .config import AppConfig
 
     global_data = GlobalData()
+    global_data["ray-iam-auth"] = dict()
     global_data["root_path"] = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     global_data["log_path"] = os.path.join(global_data["root_path"], "log")
     app_config = AppConfig()

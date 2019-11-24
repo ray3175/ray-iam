@@ -1,19 +1,13 @@
-import { normal } from "../../component/form/login.js";
+import { formLogin } from "../../component/form/login.js";
 
 
 var login = new Vue({
     el: "#login",
-    components: {
-        "Login": {
-            props: ["user", "password"],
-            template: normal
-        }
-    },
+    mixins: [ formLogin ],
     data() {
         return {
-            user: null,
-            password: null
-        };
+            login_success_url: "../index.html"
+        }
     }
 });
 

@@ -13,9 +13,10 @@ def transaction(auto_commit=True):
             if "__session__" not in kwargs:
                 kwargs["__session__"] = Dao.Session()
                 session = kwargs["__session__"]
+                session.manual_commit = bool(auto_commit)
                 try:
                     _return = func(*args, **kwargs)
-                    if auto_commit:
+                    if session.manual_commit:
                         session.commit()
                 except Exception as e:
                     logger.error(f"数据库事务出现异常！\nerror：\n{e}")
@@ -25,6 +26,7 @@ def transaction(auto_commit=True):
                     session.close()
             else:
                 _return = func(*args, **kwargs)
+                kwargs["__session__"].manual_commit |= bool(auto_commit)
             return _return
         return action
     return transaction_action(auto_commit) if callable(auto_commit) else transaction_action

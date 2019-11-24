@@ -1,5 +1,28 @@
-var normal = "<h1>{{ user }}</h1>" +
-    "<h2>{{ password }}</h2>";
+import { postLogin } from "../../api/default/login.js"
 
 
-export { normal };
+var formLogin = {
+    data() {
+        return {
+            login_success_url: "",
+            user: null,
+            password: null
+        };
+    },
+    methods: {
+        loginClick(callback=this.loginCallback) {
+            postLogin(this.user, this.password, callback);
+        },
+        loginCallback(rsp) {
+            if (rsp.data.code === 200) {
+                window.location.assign(this.login_success_url);
+            }
+            else {
+                sweetAlert(rsp.data.msg);
+            }
+        }
+    }
+};
+
+
+export { formLogin };
