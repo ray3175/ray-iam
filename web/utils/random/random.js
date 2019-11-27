@@ -1,5 +1,5 @@
 var randomNumber = function (quantity=5) {
-    return Math.round(Math.random() * 10 * quantity);
+    return Math.round(Math.random() * 10 ** quantity);
 };
 
 

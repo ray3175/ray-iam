@@ -13,9 +13,16 @@
         <nav-bar :router="router"></nav-bar>
     </div>
     <div id="msg">
+        <message ref="message"></message>
     </div>
     <div id="main">
-        <button @click="demo">A</button>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-sm-2">
+                    <add-project></add-project>
+                </div>
+            </div>
+        </div>
     </div>
     <div id="footer">
     </div>

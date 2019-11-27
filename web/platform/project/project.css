@@ -1,0 +1,13 @@
+#eject-layout {
+    width: 60%;
+    left: 20%;
+}
+
+#eject-layout .modal-body label {
+    height: 38px;
+    align-items: center;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+}
+

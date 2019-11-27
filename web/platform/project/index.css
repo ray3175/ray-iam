@@ -1,2 +1,13 @@
 @import "../../component/navbar/navbar.css";
+@import "../../component/message/message.css";
+@import "./project.css";
+
+
+#main {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    top: 10px;
+}
 

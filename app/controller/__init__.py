@@ -5,4 +5,5 @@ default_blueprint = Blueprint("default", __name__)
 
 
 from .default import *
+from .project import *
 

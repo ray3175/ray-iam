@@ -1,5 +1,6 @@
 import { navBar } from "../../component/navbar/navbar.js";
-import { message } from "../../component/message/message.js"
+import { message } from "../../component/message/message.js";
+import { addProject } from "./project.js";
 
 
 var header = new Vue({
@@ -17,15 +18,18 @@ var header = new Vue({
 
 var msg = new Vue({
     el: "#msg",
-    mixins: [ message ],
+    mixins: [ message ]
 });
 
 
 var main = new Vue({
     el: "#main",
+    components: {
+        "add-project": addProject
+    },
     methods: {
-        demo() {
-            msg.addMessage('草泥马', 'success');
+        addMessage(text, type) {
+            msg.addMessage(text, type);
         }
     }
 });
