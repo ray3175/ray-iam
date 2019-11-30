@@ -13,19 +13,12 @@
         <nav-bar :router="router"></nav-bar>
     </div>
     <div id="msg">
-        <message ref="message"></message>
+        <message ref="messageObj"></message>
     </div>
     <div id="main">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-sm-2">
-                    <add-project></add-project>
-                </div>
-            </div>
-        </div>
+        <project></project>
     </div>
-    <div id="footer">
-    </div>
+    <div id="footer"></div>
 </body>
 <script src="../../lib/js/jquery-3.4.1.min.js"></script>
 <script src="../../lib/js/vue-2.6.10.min.js"></script>

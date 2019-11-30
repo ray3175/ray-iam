@@ -1,6 +1,6 @@
 import { navBar } from "../../component/navbar/navbar.js";
 import { message } from "../../component/message/message.js";
-import { addProject } from "./project.js";
+import { project } from "./project.js";
 
 
 var header = new Vue({
@@ -25,7 +25,12 @@ var msg = new Vue({
 var main = new Vue({
     el: "#main",
     components: {
-        "add-project": addProject
+        "project": project
+    },
+    computed: {
+        tableData: function () {
+            return this.getTableData;
+        }
     },
     methods: {
         addMessage(text, type) {

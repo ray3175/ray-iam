@@ -1,8 +1,8 @@
 from sqlalchemy import Column, String, Integer, SmallInteger, Text
-from ..lib.database.base import Base
+from ..lib.database.module import Module
 
 
-class Administrator(Base):
+class Administrator(Module):
     __tablename__ = "administrator"
 
     id = Column(Integer, primary_key=True, comment="管理员ID")

@@ -1,0 +1,6 @@
+@import "../../lib/bootstrap/css/bootstrap.min.css";
+
+
+.btn-toolbar .page-goto {
+    width: 80px;
+}

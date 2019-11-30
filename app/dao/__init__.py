@@ -1,33 +1,40 @@
-from functools import wraps
-from ..lib.database import Dao
-from ..common.logger import LoggerRun
+from ..lib.database import DB
 
 
-logger = LoggerRun()
+class Dao:
+    def __init__(self, module):
+        self.module = module
+        self.session = None
 
+    def _get_condition(self, condition):
+        _condition = list()
+        for key, value in condition.items():
+            _condition.append(getattr(self.module, key) == value)
+        return _condition
 
-def transaction(auto_commit=True):
-    def transaction_action(func):
-        @wraps(func)
-        def action(*args, **kwargs):
-            if "__session__" not in kwargs:
-                kwargs["__session__"] = Dao.Session()
-                session = kwargs["__session__"]
-                session.manual_commit = bool(auto_commit)
-                try:
-                    _return = func(*args, **kwargs)
-                    if session.manual_commit:
-                        session.commit()
-                except Exception as e:
-                    logger.error(f"数据库事务出现异常！\nerror：\n{e}")
-                    session.rollback()
-                    _return = False
-                finally:
-                    session.close()
-            else:
-                _return = func(*args, **kwargs)
-                kwargs["__session__"].manual_commit |= bool(auto_commit)
-            return _return
-        return action
-    return transaction_action(auto_commit) if callable(auto_commit) else transaction_action
+    @DB.session
+    def get(self, condition=None, offset=None, limit=None, reverse=False, **kwargs):
+        module = self.session.query(self.module)
+        if condition and isinstance(condition, dict):
+            module = module.filter(*self._get_condition(condition))
+        if reverse:
+            module = module.order_by(self.module.id.desc())
+        if limit:
+            module = module.limit(limit)
+        if offset:
+            module = module.offset(offset)
+        return module.all()
+
+    @DB.session
+    def add(self, params, **kwargs):
+        self.session.add(self.module(**params))
+        return True
+
+    @DB.session
+    def update(self, condition, params, **kwargs):
+        self.session.query(self.module).filter(*self._get_condition(condition)).update(params, synchronize_session=False)
+
+    @DB.session
+    def delete(self, condition, **kwargs):
+        self.session.query(self.module).filter(*self._get_condition(condition)).delete(synchronize_session=False)
 

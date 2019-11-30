@@ -1,10 +1,10 @@
-from ...dao import transaction
+from ...lib.database import DB
 from ...dao.project.project import DaoProjectProject
+from .. import Service
 
 
-class ServiceProjectProject:
-    @classmethod
-    @transaction
-    def add_project(cls, name, domain, logout_url, license_key, **kwargs):
-        return DaoProjectProject.add_project(name, domain, logout_url, license_key, **kwargs)
+class ServiceProjectProject(Service):
+    def __init__(self):
+        super().__init__(DaoProjectProject)
+
 

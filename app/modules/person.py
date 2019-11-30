@@ -1,8 +1,8 @@
 from sqlalchemy import Column, String, BigInteger, Boolean
-from ..lib.database.base import Base
+from ..lib.database.module import Module
 
 
-class Person(Base):
+class Person(Module):
     __tablename__ = "person"
 
     id = Column(BigInteger, primary_key=True, comment="用户ID")

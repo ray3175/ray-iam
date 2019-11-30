@@ -18,7 +18,7 @@ def login():
         "code": 401,
         "msg": "账号不存在或密码不正确！"
     }
-    if ServiceDefaultLogin.auth_verify(user, password):
+    if ServiceDefaultLogin().auth_verify(user, password):
         session["user"] = user
         session["password"] = password
         rsp["code"] = 200

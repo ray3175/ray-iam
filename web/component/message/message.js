@@ -26,7 +26,7 @@ var message = {
     methods: {
         addMessage(text, type="light", time=10) {
             // 组件引用 <message ref="message"></message>
-            this.$refs.message.addMessage(text, type, time);
+            this.$refs.messageObj.addMessage(text, type, time);
         },
         addMessageSuccess(text, time=10) {
             this.addMessage(text, "success", time);

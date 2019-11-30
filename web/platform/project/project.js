@@ -1,38 +1,57 @@
-import "../../utils/sweetalert/sweetalert-dev.js";
-import { postProject } from "../../api/project/project.js";
+import { addProject, searchProject } from "./project-action.js";
+import { table } from "./table.js"
+import { pageButtonGroup } from "../../component/page-button-group/page-button-group.js"
+import { getProject } from "../../api/project/project.js";
 
 
-var addProject = {
-    template: '<div><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#eject-layout">添加项目</button><div id="eject-layout" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"><div class="modal-dialog" role="document"></div><div class="modal-content"><div class="modal-header"><h5 class="modal-title">添加项目</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body"><div class="container-fluid"><div class="row"><div class="col-sm-4"><label>项目名称：</label></div><div class="col-sm-8"><input v-model="name" type="text" class="form-control" placeholder="..."></div></div><div class="row"><div class="col-sm-4"><label>项目域名：</label></div><div class="col-sm-8"><input v-model="domain" type="text" class="form-control" placeholder="..."></div></div><div class="row"><div class="col-sm-4"><label>注销地址：</label></div><div class="col-sm-8"><input v-model="logout_url" type="text" class="form-control" placeholder="..."></div></div><div class="row"><div class="col-sm-4"><label>授权码：</label></div><div class="col-sm-8"><input v-model="license_key" type="text" class="form-control" placeholder="..."></div></div></div></div><div class="modal-footer"><button @click="confirmClick" type="button" class="btn btn-outline-success">确定</button><button type="button" class="btn btn-outline-danger" data-dismiss="modal">取消</button></div></div></div></div>',
+var project = {
+    template: '<div class="container"><div class="row align-items-center"><add-project></add-project><search-project ref="searchProjectObj"></search-project></div><div class="row"><div class="table-div"><table-project :tableData="tableData"></table-project></div></div><div class="row"><div class="page-div"><page-project :page="page" :rows="rows" :pageNow="pageNow" :dataLength="data.length"></page-project></div></div></div>',
+    components: {
+        "add-project": addProject,
+        "search-project": searchProject,
+        "table-project": table,
+        "page-project": pageButtonGroup
+    },
     data() {
         return {
-            name: null,
-            domain: null,
-            logout_url: null,
-            license_key: null
+            page: 1,
+            rows: 10,
+            pageNow: 1,
+            reverse: true,
+            data: []
+        };
+    },
+    created() {
+        this.getTableData();
+    },
+    computed: {
+        tableData() {
+            let sliceNow = this.pageNow % 10;
+            if (! sliceNow) {
+                sliceNow = 10
+            }
+            return this.data.slice((sliceNow - 1) * this.rows, sliceNow * this.rows);
+        }
+    },
+    watch: {
+        page: function () {
+            this.getTableData();
         }
     },
     methods: {
-        confirmClick() {
-            if (this.name && this.domain) {
-                $("#eject-layout").modal("hide");
-                postProject(this.name, this.domain, this.logout_url, this.license_key, this.callback);
-            }
-            else {
-                sweetAlert("项目名称、项目域名不允许为空！")
-            }
+        addMessage(text, type) {
+            this.$parent.addMessage(text, type);
         },
-        callback(rsp) {
-            if (rsp.data.code === 200) {
-                this.name = null;
-                this.domain = null;
-                this.logout_url = null;
-                this.license_key = null;
-            }
-            this.$parent.addMessage(rsp.data.msg, rsp.data.code === 200 ? "success" : "danger");
+        getTableData() {
+            let _this = this;
+            getProject((this.page - 1) * (this.rows * 10), this.rows * 10, this.reverse, this.$refs.searchProjectObj ? this.$refs.searchProjectObj.searchValue : null, function (rsp) {
+                if (rsp.data.code === 200) {
+                    _this.data = rsp.data.data;
+                }
+            });
         }
     }
 };
 
 
-export { addProject };
+export { project };

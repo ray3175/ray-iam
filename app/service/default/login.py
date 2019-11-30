@@ -1,15 +1,18 @@
 from xy.common.global_data import GlobalData
-from ...dao import transaction
+from ...lib.database import DB
 from ...dao.default.login import DaoDefaultLogin
+from .. import Service
 
 
-class ServiceDefaultLogin:
+class ServiceDefaultLogin(Service):
     global_data = GlobalData()
 
-    @classmethod
-    @transaction(auto_commit=False)
-    def auth_verify(cls, user, password, **kwargs):
-        if not ((administrator:=DaoDefaultLogin.get_administrator_with_account(user, **kwargs)) and administrator.password == password):
+    def __init__(self):
+        super().__init__(DaoDefaultLogin)
+
+    @DB.transaction(auto_commit=False)
+    def auth_verify(self, user, password, **kwargs):
+        if not ((administrator:=self.dao.get_administrator_with_account(user, **kwargs)) and administrator.password == password):
             return None
-        cls.global_data["ray-iam-auth"][user] = password
+        self.global_data["ray-iam-auth"][user] = password
         return True

@@ -1,19 +1,19 @@
-from ..lib.database.base import Base
-from ..lib.database import Dao
+from ..lib.database.module import Module
+from ..lib.database import DB
 
 
-class InitDB(Dao):
+class InitDB(DB):
     def create_db(self):
         """
         如果没有创建数据库，先执行下列命令创建数据库：
             create database ray_iam default charset utf8mb4;
         """
         from .. import modules
-        Base.metadata.create_all(self.engine)
+        Module.metadata.create_all(self.engine)
 
     def drop_db(self):
         from .. import modules
-        Base.metadata.drop_all(self.engine)
+        Module.metadata.drop_all(self.engine)
 
     def add_administrator(self):
         from ..modules.administrator import Administrator

@@ -1,13 +1,19 @@
-#eject-layout {
-    width: 60%;
-    left: 20%;
+@import "./project-action.css";
+@import "./table.css";
+@import "../../component/page-button-group/page-button-group.css";
+
+
+.table-div {
+    width: 100%;
+    top: 10px;
+    position: relative;
+    overflow: auto;
 }
 
-#eject-layout .modal-body label {
-    height: 38px;
-    align-items: center;
-    display: flex;
-    justify-content: space-around;
-    flex-direction: column;
+.page-div {
+    width: 100%;
 }
 
+.page-div>div {
+    float: right;
+}

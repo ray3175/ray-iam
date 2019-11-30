@@ -1,9 +1,9 @@
 from sqlalchemy import Column, ForeignKey, String, BigInteger, Boolean
 from sqlalchemy.orm import relationship
-from ..lib.database.base import Base
+from ..lib.database.module import Module
 
 
-class User(Base):
+class User(Module):
     __tablename__ = "user"
 
     id = Column(BigInteger, primary_key=True, comment="用户账号ID")
