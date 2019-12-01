@@ -2,7 +2,7 @@ import "../../lib/bootstrap/js/bootstrap.min.js";
 
 
 var pageButtonGroup = {
-    template: '<div class="btn-toolbar" role="toolbar"><div class="btn-group" role="group"><button @click="prePageClick()" :disabled="prePageDisabled" type="button" class="btn btn-secondary"><</button></div><div class="btn-group" role="group"><button v-for="pageNumber in pageRange" @click="numberPageClick(pageNumber)" :disabled="pageNumberDisabled(pageNumber)" type="button" class="btn btn-secondary">{{ pageNumber }}</button></div><div class="btn-group" role="group"><button @click="nextPageClick()" :disabled="nextPageDisabled" type="button" class="btn btn-secondary">></button></div><div class="input-group"><input v-model="pageNowShow" @input="pageGoTo()" class="page-goto form-control" type="text" autocomplete="off" placeholder="..."></div></div>',
+    template: '<div class="btn-toolbar" role="toolbar"><div class="btn-group" role="group"><button @click="prePageClick()" :disabled="prePageDisabled" type="button" class="btn btn-secondary"><</button></div><div class="btn-group" role="group"><button v-for="pageNumber in pageRange" @click="numberPageClick(pageNumber)" :disabled="pageNumberDisabled(pageNumber)" type="button" class="btn btn-secondary">{{ pageNumber }}</button></div><div class="btn-group" role="group"><button @click="nextPageClick()" :disabled="nextPageDisabled" type="button" class="btn btn-secondary">></button></div><div class="input-group"><input v-model="pageNowShow" @input="pageGoTo()" class="page-goto form-control text-center" type="text" autocomplete="off" placeholder="..."></div></div>',
     props: ["page", "rows", "pageNow", "dataLength"],
     data() {
         return {

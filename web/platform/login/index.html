@@ -11,16 +11,7 @@
 <body>
     <div id="login">
         <div class="layout">
-            <div class="form-login">
-                <h1 class="form-login-title">Ray-Iam</h1>
-                <div class="form-login-input">
-                    <input v-model="user" type="text" class="form-login-input_input" autocomplete="off" placeholder="用户名">
-                </div>
-                <div class="form-login-input">
-                    <input v-model="password" type="password" class="form-login-input_input" autocomplete="off" placeholder="密码">
-                </div>
-                <button @click="loginClick()" class="form-login-button">登录</button>
-            </div>
+            <form-login :login-success-url="loginSuccessUrl"></form-login>
         </div>
     </div>
 </body>

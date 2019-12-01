@@ -1,4 +1,4 @@
-from flask import request
+from flask import request, abort
 from ...lib.flask.decorator import json_content_type
 from ...lib.flask.response import response
 from ...lib.flask.value_transform import ValueTransform
@@ -10,39 +10,79 @@ from ..auth import auth
 @project_blueprint.route("/", methods=["GET", "POST"])
 @auth
 @json_content_type()
-def project():
+def index():
+    rsp = {
+        "code": 500,
+        "msg": "服务器出现未知错误，请联系管理员！"
+    }
     if request.method == "GET":
-        _id = request.args.get("id")
-        name = request.args.get("name")
         condition = dict()
-        if _id:
+        if _id:=request.args.get("id"):
             condition.update({"id", _id})
-        if name:
+        if name:=request.args.get("name"):
             condition.update({"name": name})
         offset = ValueTransform.intstr2int(request.args.get("offset"))
         limit = ValueTransform.intstr2int(request.args.get("limit"))
         reverse = ValueTransform.boolstr2bool(request.args.get("reverse"))
-        rsp = {
-            "code": 500,
-            "msg": "服务器出现未知错误，请联系管理员！"
-        }
         if isinstance(data:=ServiceProjectProject().get(condition, offset, limit, reverse), list):
             rsp["code"] = 200
             rsp["data"] = data
             rsp["msg"] = "获取项目成功！"
         return response(**rsp)
     data = request.get_json()
-    params = dict(name=data.get("name"),
-                  domain=data.get("domain"),
+    if not ((name:=data.get("name")) and (domain:=data.get("domain"))):
+        abort(400)
+    params = dict(name=name,
+                  domain=domain,
                   login_url=data.get("login_url"),
                   logout_url=data.get("logout_url"),
                   auth_code=data.get("auth_code"))
-    rsp = {
-        "msg": "添加项目成功！"
-    }
-    if not ServiceProjectProject().add(params):
-        rsp["code"] = 400
-        rsp["msg"] = "添加项目失败！"
+    if ServiceProjectProject().add(params):
+        rsp["code"] = 200
+        rsp["msg"] = "添加项目成功！"
     return response(**rsp)
+
+
+@project_blueprint.route("/<int:_id>", methods=["GET", "PUT", "DELETE"])
+@auth
+@json_content_type(delete=False)
+def project(_id):
+    rsp = {
+        "code": 500,
+        "msg": "服务器出现未知错误，请联系管理员！"
+    }
+    if request.method == "GET":
+        if data:=ServiceProjectProject().get_project(_id):
+            rsp["code"] = 200
+            rsp["data"] = data
+            rsp["msg"] = f"获取项目：{_id} 成功！"
+        elif data is None:
+            rsp["code"] = 404
+            rsp["msg"] = f"项目：{_id} 不存在！"
+        return response(**rsp)
+    else:
+        condition = dict(id=_id)
+        if request.method == "PUT":
+            data, params = request.get_json(), dict()
+            if name:=data.get("name"):
+                params.update({"name": name})
+            if domain:=data.get("domain"):
+                params.update({"domain": domain})
+            if login_url:=data.get("login_url"):
+                params.update({"login_url": login_url})
+            if logout_url:=data.get("logout_url"):
+                params.update({"logout_url": logout_url})
+            if auth_code:=data.get("auth_code"):
+                params.update({"auth_code": auth_code})
+            if not params:
+                abort(400)
+            if ServiceProjectProject().update(condition, params):
+                rsp["code"] = 200
+                rsp["msg"] = f"修改项目：{_id} 成功！"
+            return response(**rsp)
+        if ServiceProjectProject().delete(condition):
+            rsp["code"] = 200
+            rsp["msg"] = f"删除项目：{_id} 成功！"
+        return response(**rsp)
 
 

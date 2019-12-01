@@ -33,8 +33,10 @@ class Dao:
     @DB.session
     def update(self, condition, params, **kwargs):
         self.session.query(self.module).filter(*self._get_condition(condition)).update(params, synchronize_session=False)
+        return True
 
     @DB.session
     def delete(self, condition, **kwargs):
         self.session.query(self.module).filter(*self._get_condition(condition)).delete(synchronize_session=False)
+        return True
 

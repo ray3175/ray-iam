@@ -33,6 +33,34 @@ const postProject = function (name, domain, login_url, logout_url, auth_code, ca
     });
 };
 
+const putProject = function (id, name, domain, login_url, logout_url, auth_code, callback=null) {
+    axios.put("/project/" + id, {
+        name: name,
+        domain: domain,
+        login_url: login_url,
+        logout_url: logout_url,
+        auth_code: auth_code
+    }).then(function (rsp) {
+        if (callback) {
+            callback(rsp);
+        }
+        else {
+            return rsp;
+        }
+    });
+};
 
-export { getProject, postProject };
+const deleteProject = function (id, callback=null) {
+    axios.delete("/project/" + id).then(function (rsp) {
+        if (callback) {
+            callback(rsp);
+        }
+        else {
+            return rsp;
+        }
+    });
+};
+
+
+export { getProject, postProject, putProject, deleteProject };
 

@@ -18,6 +18,6 @@ class Service:
         return self.dao.update(condition, params, **kwargs)
 
     @DB.transaction
-    def delete(self, condition, params, **kwargs):
-        return self.dao.delete(condition, params, **kwargs)
+    def delete(self, condition, **kwargs):
+        return self.dao.delete(condition, **kwargs)
 
