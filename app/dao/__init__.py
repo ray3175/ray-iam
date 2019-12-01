@@ -2,7 +2,7 @@ from ..lib.database import DB
 
 
 class Dao:
-    def __init__(self, module):
+    def __init__(self, module=None):
         self.module = module
         self.session = None
 

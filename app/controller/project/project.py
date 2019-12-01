@@ -2,7 +2,7 @@ from flask import request, abort
 from ...lib.flask.decorator import json_content_type
 from ...lib.flask.response import response
 from ...lib.flask.value_transform import ValueTransform
-from ...service.project.project import ServiceProjectProject
+from ...service.project import ServiceProject
 from .. import project_blueprint
 from ..auth import auth
 
@@ -24,7 +24,7 @@ def index():
         offset = ValueTransform.intstr2int(request.args.get("offset"))
         limit = ValueTransform.intstr2int(request.args.get("limit"))
         reverse = ValueTransform.boolstr2bool(request.args.get("reverse"))
-        if isinstance(data:=ServiceProjectProject().get(condition, offset, limit, reverse), list):
+        if isinstance(data:=ServiceProject().get(condition, offset, limit, reverse), list):
             rsp["code"] = 200
             rsp["data"] = data
             rsp["msg"] = "获取项目成功！"
@@ -37,7 +37,7 @@ def index():
                   login_url=data.get("login_url"),
                   logout_url=data.get("logout_url"),
                   auth_code=data.get("auth_code"))
-    if ServiceProjectProject().add(params):
+    if ServiceProject().add(params):
         rsp["code"] = 200
         rsp["msg"] = "添加项目成功！"
     return response(**rsp)
@@ -52,7 +52,7 @@ def project(_id):
         "msg": "服务器出现未知错误，请联系管理员！"
     }
     if request.method == "GET":
-        if data:=ServiceProjectProject().get_project(_id):
+        if data:=ServiceProject().get_project(_id):
             rsp["code"] = 200
             rsp["data"] = data
             rsp["msg"] = f"获取项目：{_id} 成功！"
@@ -76,11 +76,11 @@ def project(_id):
                 params.update({"auth_code": auth_code})
             if not params:
                 abort(400)
-            if ServiceProjectProject().update(condition, params):
+            if ServiceProject().update(condition, params):
                 rsp["code"] = 200
                 rsp["msg"] = f"修改项目：{_id} 成功！"
             return response(**rsp)
-        if ServiceProjectProject().delete(condition):
+        if ServiceProject().delete(condition):
             rsp["code"] = 200
             rsp["msg"] = f"删除项目：{_id} 成功！"
         return response(**rsp)

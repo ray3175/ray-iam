@@ -1,8 +1,9 @@
 from ..lib.database import DB
+from ..dao import Dao
 
 
 class Service:
-    def __init__(self, dao):
+    def __init__(self, dao=Dao):
         self.dao = dao()
 
     @DB.transaction(auto_commit=False)

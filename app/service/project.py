@@ -1,9 +1,9 @@
-from ...lib.database import DB
-from ...dao.project import DaoProject
-from .. import Service
+from ..lib.database import DB
+from ..dao.project import DaoProject
+from . import Service
 
 
-class ServiceProjectProject(Service):
+class ServiceProject(Service):
     def __init__(self):
         super().__init__(DaoProject)
 
