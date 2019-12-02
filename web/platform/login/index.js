@@ -9,7 +9,7 @@ var login = new Vue({
     data() {
         return {
             loginSuccessUrl: "../index.html"
-        }
+        };
     }
 });
 

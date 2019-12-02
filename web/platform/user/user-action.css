@@ -1,0 +1,18 @@
+@import "../../utils/sweetalert/sweetalert.css";
+@import "../../lib/bootstrap/css/bootstrap.min.css";
+
+
+div[id*=eject-layout] {
+    width: 60%;
+    left: 20%;
+}
+
+div[id*=eject-layout] .modal-body label {
+    height: 38px;
+    align-items: center;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
+

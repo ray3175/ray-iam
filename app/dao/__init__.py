@@ -2,9 +2,9 @@ from ..lib.database import DB
 
 
 class Dao:
-    def __init__(self, module=None):
+    def __init__(self, module=None, session=None):
         self.module = module
-        self.session = None
+        self.session = session
 
     def _get_condition(self, condition):
         _condition = list()

@@ -15,22 +15,15 @@ var header = new Vue({
     }
 });
 
-
 var msg = new Vue({
     el: "#msg",
     mixins: [ message ]
 });
 
-
 var main = new Vue({
     el: "#main",
     components: {
         "project": project
-    },
-    computed: {
-        tableData: function () {
-            return this.getTableData;
-        }
     },
     methods: {
         addMessage(text, type) {

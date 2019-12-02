@@ -35,9 +35,6 @@ cache: &cache
     user-db:
       db: 10
       ex: 3600
-    project-db:
-      db: 11
-      ex: 86400
   mongodb: &mongodb
     host: 127.0.0.1
     port: 27017

@@ -1,0 +1,19 @@
+@import "./user-action.css";
+@import "./table.css";
+@import "../../component/page-button-group/page-button-group.css";
+
+
+.table-div {
+    width: 100%;
+    top: 10px;
+    position: relative;
+    overflow: auto;
+}
+
+.page-div {
+    width: 100%;
+}
+
+.page-div>div {
+    float: right;
+}

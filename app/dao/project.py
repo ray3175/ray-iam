@@ -4,8 +4,8 @@ from . import Dao
 
 
 class DaoProject(Dao):
-    def __init__(self):
-        super().__init__(Project)
+    def __init__(self, module=Project, session=None):
+        super().__init__(module, session)
 
     @DB.session
     def get_project(self, _id, **kwargs):

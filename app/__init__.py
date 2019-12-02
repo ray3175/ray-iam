@@ -23,10 +23,11 @@ def init_app():
 def create_app():
     from .lib.flask.response import response
     from .lib.flask.redirect import redirect_to_source
-    from .controller import default_blueprint, project_blueprint
+    from .controller import default_blueprint, project_blueprint, user_blueprint
 
     app.register_blueprint(default_blueprint)
     app.register_blueprint(project_blueprint)
+    app.register_blueprint(user_blueprint)
 
     @app.errorhandler(400)
     def error_400(error):

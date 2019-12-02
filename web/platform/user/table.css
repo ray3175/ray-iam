@@ -1,0 +1,23 @@
+@import "../../lib/bootstrap/css/bootstrap.min.css";
+
+
+.table {
+    text-align: center;
+}
+
+.table th {
+    white-space: nowrap;
+}
+
+.table td {
+    white-space: nowrap;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.text-align-left {
+    text-align: left;
+}
+

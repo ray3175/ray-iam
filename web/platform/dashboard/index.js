@@ -9,7 +9,7 @@ var header = new Vue({
     data () {
         return {
             router: ".."
-        }
+        };
     }
 });
 

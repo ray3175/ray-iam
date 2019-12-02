@@ -4,8 +4,8 @@ from .. import Dao
 
 
 class DaoDefaultLogin(Dao):
-    def __init__(self):
-        super().__init__(None)
+    def __init__(self, module=None, session=None):
+        super().__init__(module, session)
 
     @DB.session
     def get_administrator_with_account(self, account, **kwargs):
