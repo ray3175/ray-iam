@@ -60,29 +60,28 @@ def project(_id):
             rsp["code"] = 404
             rsp["msg"] = f"项目：{_id} 不存在！"
         return response(**rsp)
-    else:
-        condition = dict(id=_id)
-        if request.method == "PUT":
-            data, params = request.get_json(), dict()
-            if name:=data.get("name"):
-                params.update({"name": name})
-            if domain:=data.get("domain"):
-                params.update({"domain": domain})
-            if login_url:=data.get("login_url"):
-                params.update({"login_url": login_url})
-            if logout_url:=data.get("logout_url"):
-                params.update({"logout_url": logout_url})
-            if auth_code:=data.get("auth_code"):
-                params.update({"auth_code": auth_code})
-            if not params:
-                abort(400)
-            if ServiceProject().update(condition, params):
-                rsp["code"] = 200
-                rsp["msg"] = f"修改项目：{_id} 成功！"
-            return response(**rsp)
-        if ServiceProject().delete(condition):
+    condition = dict(id=_id)
+    if request.method == "PUT":
+        data, params = request.get_json(), dict()
+        if name:=data.get("name"):
+            params.update({"name": name})
+        if domain:=data.get("domain"):
+            params.update({"domain": domain})
+        if login_url:=data.get("login_url"):
+            params.update({"login_url": login_url})
+        if logout_url:=data.get("logout_url"):
+            params.update({"logout_url": logout_url})
+        if auth_code:=data.get("auth_code"):
+            params.update({"auth_code": auth_code})
+        if not params:
+            abort(400)
+        if ServiceProject().update(condition, params):
             rsp["code"] = 200
-            rsp["msg"] = f"删除项目：{_id} 成功！"
+            rsp["msg"] = f"修改项目：{_id} 成功！"
         return response(**rsp)
+    if ServiceProject().delete(condition):
+        rsp["code"] = 200
+        rsp["msg"] = f"删除项目：{_id} 成功！"
+    return response(**rsp)
 
 

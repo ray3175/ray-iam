@@ -1,4 +1,3 @@
-from ..lib.database import DB
 from ..modules.mail import Mail
 from . import Dao
 

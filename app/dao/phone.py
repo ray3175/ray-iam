@@ -1,4 +1,3 @@
-from ..lib.database import DB
 from ..modules.phone import Phone
 from . import Dao
 

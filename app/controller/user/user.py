@@ -36,16 +36,10 @@ def index():
     data = request.get_json()
     if not ((account:=data.get("account")) and (password:=data.get("password"))):
         abort(400)
-    id_card = data.get("id_card")
-    name = data.get("name")
-    sex = data.get("sex")
-    birth_date = data.get("birth_date")
-    birth_place = data.get("birth_place")
-    native_place = data.get("native_place")
-    nationality = data.get("nationality")
-    phone = data.get("phone")
-    mail = data.get("mail")
-    if ServiceUser().add_user(account, password, id_card, name, sex, birth_date, birth_place, native_place, nationality, phone, mail):
+    params = dict(account=account,
+                  password=password,
+                  person_id=data.get("person_id"))
+    if ServiceUser().add(params):
         rsp["code"] = 200
         rsp["msg"] = "添加用户成功！"
     return response(**rsp)
@@ -54,13 +48,13 @@ def index():
 @user_blueprint.route("/<int:_id>", methods=["GET", "PUT", "DELETE"])
 @auth
 @json_content_type(delete=False)
-def project(_id):
+def user(_id):
     rsp = {
         "code": 500,
         "msg": "服务器出现未知错误，请联系管理员！"
     }
     if request.method == "GET":
-        if data:=ServiceProject().get_project(_id):
+        if data:=ServiceUser().get_user(_id):
             rsp["code"] = 200
             rsp["data"] = data
             rsp["msg"] = f"获取用户：{_id} 成功！"
@@ -68,29 +62,37 @@ def project(_id):
             rsp["code"] = 404
             rsp["msg"] = f"用户：{_id} 不存在！"
         return response(**rsp)
-    else:
-        condition = dict(id=_id)
-        if request.method == "PUT":
-            data, params = request.get_json(), dict()
-            if name:=data.get("name"):
-                params.update({"name": name})
-            if domain:=data.get("domain"):
-                params.update({"domain": domain})
-            if login_url:=data.get("login_url"):
-                params.update({"login_url": login_url})
-            if logout_url:=data.get("logout_url"):
-                params.update({"logout_url": logout_url})
-            if auth_code:=data.get("auth_code"):
-                params.update({"auth_code": auth_code})
-            if not params:
-                abort(400)
-            if ServiceProject().update(condition, params):
-                rsp["code"] = 200
-                rsp["msg"] = f"修改用户：{_id} 成功！"
-            return response(**rsp)
-        if ServiceProject().delete(condition):
+    condition = dict(id=_id)
+    if request.method == "PUT":
+        data, params = request.get_json(), dict()
+        if account:=data.get("account"):
+            params.update({"account": account})
+        if password:=data.get("password"):
+            params.update({"password": password})
+        if person_id:=data.get("person_id"):
+            params.update({"person_id": person_id})
+        if not params:
+            abort(400)
+        if ServiceUser().update(condition, params):
             rsp["code"] = 200
-            rsp["msg"] = f"删除用户：{_id} 成功！"
+            rsp["msg"] = f"修改用户：{_id} 成功！"
         return response(**rsp)
+    if ServiceUser().delete(condition):
+        rsp["code"] = 200
+        rsp["msg"] = f"删除用户：{_id} 成功！"
+    return response(**rsp)
 
+
+@user_blueprint.route("/logic/<any(delete, restore):action>/<int:_id>", methods=["PUT"])
+@auth
+@json_content_type(delete=False)
+def user_logic_action(action, _id):
+    rsp = {
+        "code": 500,
+        "msg": "服务器出现未知错误，请联系管理员！"
+    }
+    if ServiceUser().update({"id": _id}, {"xy": False if action == "delete" else True}):
+        rsp["code"] = 200
+        rsp["msg"] = f'{"删除" if action == "delete" else "恢复"}（逻辑）用户：{_id} 成功！'
+    return response(**rsp)
 
