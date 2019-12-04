@@ -3,7 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Module = declarative_base()
 
-Module.dict = lambda x: recursive_to_dict(x)
+Module.__call__ = lambda x: recursive_to_dict(x)
 
 
 def recursive_to_dict(x):

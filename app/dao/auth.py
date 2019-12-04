@@ -3,7 +3,7 @@ from . import Dao
 
 
 class DaoAuth(Dao):
-    def __init__(self, module=Dao, session=None):
+    def __init__(self, module=None, session=None):
         super().__init__(module, session)
 
     def get_administrator_with_account(self, account):

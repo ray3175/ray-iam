@@ -23,12 +23,13 @@ def index():
                 rsp["msg"] = f"获取用户账号：{account} 成功！"
             elif data is None:
                 rsp["code"] = 400
+                rsp["data"] = []
                 rsp["msg"] = f"用户账号：{account} 不存在！"
         else:
             offset = ValueTransform.intstr2int(request.args.get("offset"))
             limit = ValueTransform.intstr2int(request.args.get("limit"))
             reverse = ValueTransform.boolstr2bool(request.args.get("reverse"))
-            if isinstance(data:=ServiceUser().get({"xy": True}, offset, limit, reverse), list):
+            if isinstance(data:=ServiceUser().get(offset=offset, limit=limit, reverse=reverse), list):
                 rsp["code"] = 200
                 rsp["data"] = data
                 rsp["msg"] = "获取用户成功！"
@@ -85,7 +86,7 @@ def user(_id):
 
 @user_blueprint.route("/logic/<any(delete, restore):action>/<int:_id>", methods=["PUT"])
 @auth
-@json_content_type(delete=False)
+@json_content_type(put=False)
 def user_logic_action(action, _id):
     rsp = {
         "code": 500,

@@ -3,7 +3,7 @@ import { postProject, putProject, deleteProject } from "../../api/project/projec
 
 
 var searchProject = {
-    template: '<div class="col-sm-3 offset-7"><div class="input-group"><input v-model="searchValue" @input="searchAction()" class="form-control" type="text" placeholder="请输入查询内容。。。"></div></div>',
+    template: '<div class="col-sm-3 offset-7"><div class="input-group"><input v-model="searchValue" @input="searchAction()" class="form-control" type="text" placeholder="请输入要查询的项目名称。。。"></div></div>',
     data() {
         return {
             searchValue: null,

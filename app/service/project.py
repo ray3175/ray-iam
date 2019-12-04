@@ -9,6 +9,6 @@ class ServiceProject(Service):
 
     @DB.transaction(auto_commit=False)
     def get_project(self, _id, **kwargs):
-        return (project:=self.dao.get_project(_id)) and project.dict()
+        return (project:=self.dao.get_project(_id)) and project()
 
 

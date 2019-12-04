@@ -1,10 +1,10 @@
-const getUser = function (offset, limit, reverse, name, callback=null) {
+const getUser = function (offset, limit, reverse, account, callback=null) {
     axios.get("/user/", {
         params: {
             offset: offset,
             limit: limit,
             reverse: reverse,
-            name: name
+            account: account
         }
     }).then(function (rsp) {
         if (callback) {
@@ -16,13 +16,10 @@ const getUser = function (offset, limit, reverse, name, callback=null) {
     })
 };
 
-const postUser = function (name, domain, login_url, logout_url, auth_code, callback=null) {
+const postUser = function (account, password, callback=null) {
     axios.post("/user/", {
-        name: name,
-        domain: domain,
-        login_url: login_url,
-        logout_url: logout_url,
-        auth_code: auth_code
+        account: account,
+        password: password
     }).then(function (rsp) {
         if (callback) {
             callback(rsp);
@@ -33,13 +30,10 @@ const postUser = function (name, domain, login_url, logout_url, auth_code, callb
     });
 };
 
-const putUser = function (id, name, domain, login_url, logout_url, auth_code, callback=null) {
+const putUser = function (id, account, password, callback=null) {
     axios.put("/user/" + id, {
-        name: name,
-        domain: domain,
-        login_url: login_url,
-        logout_url: logout_url,
-        auth_code: auth_code
+        account: account,
+        password: password
     }).then(function (rsp) {
         if (callback) {
             callback(rsp);
@@ -61,6 +55,28 @@ const deleteUser = function (id, callback=null) {
     });
 };
 
+const logicDeleteUser = function (id, callback=null) {
+    axios.put("/user/logic/delete/" + id).then(function (rsp) {
+        if (callback) {
+            callback(rsp);
+        }
+        else {
+            return rsp;
+        }
+    });
+};
 
-export { getUser, postUser, putUser, deleteUser };
+const logicRestoreUser = function (id, callback=null) {
+    axios.put("/user/logic/restore/" + id).then(function (rsp) {
+        if (callback) {
+            callback(rsp);
+        }
+        else {
+            return rsp;
+        }
+    });
+};
+
+
+export { getUser, postUser, putUser, deleteUser, logicDeleteUser, logicRestoreUser };
 

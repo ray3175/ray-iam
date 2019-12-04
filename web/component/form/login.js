@@ -18,7 +18,12 @@ var formLogin = {
     },
     methods: {
         loginClick(callback=this.loginCallback) {
-            postLogin(this.user, this.password, callback);
+            if (this.user && this.password) {
+                postLogin(this.user, this.password, callback);
+            }
+            else {
+                sweetAlert("请输入用户名密码！");
+            }
         },
         loginCallback(rsp) {
             if (rsp.data.code === 200) {
