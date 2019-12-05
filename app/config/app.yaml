@@ -29,12 +29,9 @@ cache: &cache
     password: null
     host: 127.0.0.1
     port: 6379
-    auth-db:
+    user-db:
       db: 9
       ex: 86400
-    user-db:
-      db: 10
-      ex: 3600
   mongodb: &mongodb
     host: 127.0.0.1
     port: 27017

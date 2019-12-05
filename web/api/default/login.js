@@ -1,6 +1,6 @@
-const postLogin = function (user, password, callback=null) {
+const postLogin = function (account, password, callback=null) {
     axios.post("/login", {
-        user: user,
+        account: account,
         password: password
     }).then(function (rsp) {
         if (callback) {

@@ -1,4 +1,3 @@
-from ..lib.database import DB
 from ..dao.phone import DaoPhone
 from . import Service
 

@@ -10,8 +10,8 @@ def logout():
         "code": 401,
         "msg": "当前会话不存在或已失效！"
     }
-    if ServiceDefaultLogout().auth_verify(session.get("user")):
-        session.pop("user", None)
+    if ServiceDefaultLogout().auth_verify(session.get("account")):
+        session.pop("account", None)
         session.pop("password", None)
         rsp["code"] = 200
         rsp["msg"] = "会话注销成功！"

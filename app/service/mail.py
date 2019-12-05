@@ -1,4 +1,3 @@
-from ..lib.database import DB
 from ..dao.mail import DaoMail
 from . import Service
 

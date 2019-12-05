@@ -17,7 +17,7 @@ def index():
     }
     if request.method == "GET":
         if account:=request.args.get("account"):
-            if data:=ServiceUser().get_user_with_account(account):
+            if data:=ServiceUser().get_user_with_account_with_cache_priority(account):
                 rsp["code"] = 200
                 rsp["data"] = [data]
                 rsp["msg"] = f"获取用户账号：{account} 成功！"
@@ -40,7 +40,7 @@ def index():
     params = dict(account=account,
                   password=password,
                   person_id=data.get("person_id"))
-    if ServiceUser().add(params):
+    if x:=ServiceUser().add(params):
         rsp["code"] = 200
         rsp["msg"] = "添加用户成功！"
     return response(**rsp)

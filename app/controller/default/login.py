@@ -12,14 +12,14 @@ def login():
     if request.method == "GET":
         return redirect_to_source("./platform/login/index.html")
     data = request.get_json()
-    if not ((user:=data.get("user")) and (password:=data.get("password"))):
+    if not ((account:=data.get("account")) and (password:=data.get("password"))):
         abort(401)
     rsp = {
         "code": 401,
         "msg": "账号不存在或密码不正确！"
     }
-    if ServiceDefaultLogin().auth_verify(user, password):
-        session["user"] = user
+    if ServiceDefaultLogin().auth_verify(account, password):
+        session["account"] = account
         session["password"] = password
         rsp["code"] = 200
         rsp["msg"] = "验证通过！"

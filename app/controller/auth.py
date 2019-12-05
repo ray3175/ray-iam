@@ -6,7 +6,7 @@ from ..service.auth import ServiceAuth
 def auth(func):
     @wraps(func)
     def varify(*args, **kwargs):
-        if not ServiceAuth().ray_iam_auth(session.get("user"), session.get("password")):
+        if not ServiceAuth().ray_iam_auth(session.get("account"), session.get("password")):
             abort(401)
         return func(*args, **kwargs)
     return varify
