@@ -9,6 +9,7 @@ def cross_domain(func):
         rsp.headers["Access-Control-Allow-Origin"] = "*"
         rsp.headers["Access-Control-Allow-Headers"] = "*"
         rsp.headers["Access-Control-Allow-Methods"] = "*"
+        rsp.headers["Access-Control-Max-Age"] = 86400
         return rsp
     return active
 

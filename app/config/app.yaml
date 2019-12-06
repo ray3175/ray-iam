@@ -10,7 +10,7 @@ flask-config: &flask-config
     days: 1
 
 hash: &hash
-  hash_type: sha512
+  hash_type: sha256
   salt: ray-iam
   iterations: 9
 
@@ -29,7 +29,7 @@ cache: &cache
     password: null
     host: 127.0.0.1
     port: 6379
-    user-db:
+    auth-db:
       db: 9
       ex: 86400
   mongodb: &mongodb

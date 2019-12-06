@@ -11,7 +11,7 @@ class Project(Module):
     login_url = Column(String(64), comment="登入地址")
     logout_url = Column(String(64), comment="登出地址")
     auth_code = Column(String(16), comment="授权码")
-    cookie_xy_auth = Column(Boolean, default=True, comment="是否Cookie xy 鉴权")
-    header_xy_auth = Column(Boolean, default=True, comment="是否Header xy 鉴权")
+    cookie_xy_auth = Column(Boolean, default=True, comment="Cookie xy-auth 鉴权")
+    header_xy_auth = Column(Boolean, default=True, comment="Header xy-auth 鉴权")
     active = Column(Boolean, default=True, comment="是否启用")
 
