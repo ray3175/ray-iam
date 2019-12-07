@@ -9,6 +9,13 @@ flask-config: &flask-config
   PERMANENT_SESSION_LIFETIME:
     days: 1
 
+cookie-config: &cookie-config
+  key: xy-auth
+  max_age: 86400
+  domain: null
+  secure: false
+  httponly: true
+
 hash: &hash
   hash_type: sha256
   salt: ray-iam
@@ -44,6 +51,8 @@ environment-product:
   flask-config:
     SECRET_KEY: ray-iam
     <<: *flask-config
+  cookie-config:
+    <<: *cookie-config
   hash:
     <<: *hash
   database:
@@ -70,6 +79,8 @@ environment-development:
     <<: *flask
   flask-config:
     <<: *flask-config
+  cookie-config:
+    <<: *cookie-config
   hash:
     <<: *hash
   database:
@@ -83,6 +94,8 @@ environment-test:
     <<: *flask
   flask-config:
     <<: *flask-config
+  cookie-config:
+    <<: *cookie-config
   hash:
     <<: *hash
   database:

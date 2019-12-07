@@ -16,6 +16,7 @@ class ServiceIamAuth(Service):
         self.__project = ServiceProject().get()
         self.__hash_account = hash_account
         self.__url_key = url_key
+        return True
 
     def __new_batch_thread_to_http_request_with_project(self, user=None):
         t_pool = list()
@@ -23,15 +24,15 @@ class ServiceIamAuth(Service):
         if isinstance(user, dict):
             _json.update({"user": user})
         for project in self.__project:
-            t_pool.append(Thread(target=lambda : requests.post(project[self.__url_key], json=_json)))
+            if project[self.__url_key]:
+                t_pool.append(Thread(target=lambda : requests.post(project[self.__url_key], json=_json)))
         for i in t_pool:
             i.start()
-        for i in t_pool:
-            i.join()
+        return t_pool
 
     @Cache.cache_redis("auth", "hash_account")
     def get_user_with_hash_account(self, hash_account, call=None):
-        if call:
+        if callable(call):
             call = call()
         return call
 
@@ -45,6 +46,7 @@ class ServiceIamAuth(Service):
         return True
 
     def logout_hash_account_to_all_project(self, hash_account):
+        Cache.auth_redis.delete(hash_account)
         self.__defined_http_params_with_project(hash_account, "logout_url")
         self.__new_batch_thread_to_http_request_with_project()
         return True
