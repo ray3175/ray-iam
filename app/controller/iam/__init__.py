@@ -1,3 +1,5 @@
 __all__ = [
-    "auth"
+    "auth",
+    "user"
 ]
+

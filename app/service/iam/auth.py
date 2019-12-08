@@ -13,7 +13,7 @@ class ServiceIamAuth(Service):
         super().__init__(dao)
 
     def __defined_http_params_with_project(self, hash_account, url_key):
-        self.__project = ServiceProject().get()
+        self.__project = ServiceProject().get({"active": True})
         self.__hash_account = hash_account
         self.__url_key = url_key
         return True

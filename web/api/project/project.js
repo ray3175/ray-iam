@@ -1,10 +1,11 @@
-const getProject = function (offset, limit, reverse, name, callback=null) {
+const getProject = function (offset, limit, reverse, name, condition_like, callback=null) {
     axios.get("/project/", {
         params: {
             offset: offset,
             limit: limit,
             reverse: reverse,
-            name: name
+            name: name,
+            condition_like: condition_like
         }
     }).then(function (rsp) {
         if (callback) {

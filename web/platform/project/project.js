@@ -47,7 +47,7 @@ var project = {
         },
         getTableData() {
             let _this = this;
-            getProject((this.page - 1) * (this.rows * 10), this.rows * 10, this.reverse, this.$refs.searchProjectObj ? this.$refs.searchProjectObj.searchValue : null, function (rsp) {
+            getProject((this.page - 1) * (this.rows * 10), this.rows * 10, this.reverse, this.$refs.searchProjectObj && this.$refs.searchProjectObj.searchValue ? "%" + this.$refs.searchProjectObj.searchValue + "%" : null, true, function (rsp) {
                 if (rsp.data.code === 200) {
                     _this.data = rsp.data.data;
                 }

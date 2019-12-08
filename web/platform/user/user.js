@@ -48,7 +48,7 @@ var user = {
         },
         getTableData() {
             let _this = this;
-            getUser((this.page - 1) * (this.rows * 10), this.rows * 10, this.reverse, this.$refs.searchUserObj ? this.$refs.searchUserObj.searchValue : null, function (rsp) {
+            getUser((this.page - 1) * (this.rows * 10), this.rows * 10, this.reverse, this.$refs.searchUserObj && this.$refs.searchUserObj.searchValue ? "%" + this.$refs.searchUserObj.searchValue + "%" : null, true, function (rsp) {
                 if (rsp.data.code === 200 || rsp.data.code === 400) {
                     _this.data = rsp.data.data;
                 }

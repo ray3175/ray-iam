@@ -1,10 +1,11 @@
-const getUser = function (offset, limit, reverse, account, callback=null) {
+const getUser = function (offset, limit, reverse, account, condition_like, callback=null) {
     axios.get("/user/", {
         params: {
             offset: offset,
             limit: limit,
             reverse: reverse,
-            account: account
+            account: account,
+            condition_like: condition_like
         }
     }).then(function (rsp) {
         if (callback) {

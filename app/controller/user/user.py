@@ -16,23 +16,17 @@ def index():
         "msg": "服务器出现未知错误，请联系管理员！"
     }
     if request.method == "GET":
+        condition = dict()
         if account:=request.args.get("account"):
-            if data:=ServiceUser().get_user_with_account(account):
-                rsp["code"] = 200
-                rsp["data"] = [data]
-                rsp["msg"] = f"获取用户账号：{account} 成功！"
-            elif data is None:
-                rsp["code"] = 400
-                rsp["data"] = []
-                rsp["msg"] = f"用户账号：{account} 不存在！"
-        else:
-            offset = ValueTransform.intstr2int(request.args.get("offset"))
-            limit = ValueTransform.intstr2int(request.args.get("limit"))
-            reverse = ValueTransform.boolstr2bool(request.args.get("reverse"))
-            if isinstance(data:=ServiceUser().get(offset=offset, limit=limit, reverse=reverse), list):
-                rsp["code"] = 200
-                rsp["data"] = data
-                rsp["msg"] = "获取用户成功！"
+            condition.update({"account": account})
+        offset = ValueTransform.intstr2int(request.args.get("offset"))
+        limit = ValueTransform.intstr2int(request.args.get("limit"))
+        reverse = ValueTransform.boolstr2bool(request.args.get("reverse"))
+        condition_like = ValueTransform.boolstr2bool(request.args.get("condition_like"))
+        if isinstance(data:=ServiceUser().get(condition, offset, limit, reverse, condition_like), list):
+            rsp["code"] = 200
+            rsp["data"] = data
+            rsp["msg"] = "获取用户成功！"
         return response(**rsp)
     data = request.get_json()
     if not ((account:=data.get("account")) and (password:=data.get("password"))):
@@ -70,8 +64,8 @@ def user(_id):
             params.update({"account": account})
         if password:=data.get("password"):
             params.update({"password": password})
-        if person_id:=data.get("person_id"):
-            params.update({"person_id": person_id})
+        if "person_id" in data:
+            params.update({"person_id": data["person_id"]})
         if not params:
             abort(400)
         if ServiceUser().update(condition, params):

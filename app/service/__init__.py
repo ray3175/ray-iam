@@ -7,8 +7,8 @@ class Service:
         self.dao = dao()
 
     @DB.transaction(auto_commit=False)
-    def get(self, condition=None, offset=None, limit=None, reverse=False, **kwargs):
-        return [module() for module in self.dao.get(condition, offset, limit, reverse)]
+    def get(self, condition=None, offset=None, limit=None, reverse=False, condition_like=False, **kwargs):
+        return [module() for module in self.dao.get(condition, offset, limit, reverse, condition_like)]
 
     @DB.transaction
     def add(self, params, **kwargs):

@@ -24,7 +24,8 @@ def index():
         offset = ValueTransform.intstr2int(request.args.get("offset"))
         limit = ValueTransform.intstr2int(request.args.get("limit"))
         reverse = ValueTransform.boolstr2bool(request.args.get("reverse"))
-        if isinstance(data:=ServiceProject().get(condition, offset, limit, reverse), list):
+        condition_like = ValueTransform.boolstr2bool(request.args.get("condition_like"))
+        if isinstance(data:=ServiceProject().get(condition, offset, limit, reverse, condition_like), list):
             rsp["code"] = 200
             rsp["data"] = data
             rsp["msg"] = "获取项目成功！"
@@ -67,12 +68,12 @@ def project(_id):
             params.update({"name": name})
         if domain:=data.get("domain"):
             params.update({"domain": domain})
-        if login_url:=data.get("login_url"):
-            params.update({"login_url": login_url})
-        if logout_url:=data.get("logout_url"):
-            params.update({"logout_url": logout_url})
-        if auth_code:=data.get("auth_code"):
-            params.update({"auth_code": auth_code})
+        if "login_url" in data:
+            params.update({"login_url": data["login_url"]})
+        if "logout_url" in data:
+            params.update({"logout_url": data["logout_url"]})
+        if "auth_code" in data:
+            params.update({"auth_code": data["auth_code"]})
         if not params:
             abort(400)
         if ServiceProject().update(condition, params):
