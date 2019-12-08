@@ -4,7 +4,7 @@ from ...lib.flask.response import response
 from ...lib.flask.value_transform import ValueTransform
 from ...service.user import ServiceUser
 from .. import user_blueprint
-from ..auth import auth
+from .._auth import auth
 
 
 @user_blueprint.route("/", methods=["GET", "POST"])
