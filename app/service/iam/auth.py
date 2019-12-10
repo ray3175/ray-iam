@@ -46,9 +46,12 @@ class ServiceIamAuth(Service):
         return True
 
     def logout_hash_account_to_all_project(self, hash_account):
-        Cache.auth_redis.delete(hash_account)
+        self.delete_hash_account_from_auth_redis(hash_account)
         self.__defined_http_params_with_project(hash_account, "logout_url")
         self.__new_batch_thread_to_http_request_with_project()
         return True
+
+    def delete_hash_account_from_auth_redis(self, hash_account):
+        return Cache.auth_redis.delete(hash_account)
 
 

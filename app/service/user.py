@@ -12,7 +12,7 @@ class ServiceUser(Service):
         return (user:=self.dao.get_user(_id)) and user()
 
     @DB.transaction(auto_commit=False)
-    def get_user_with_account(self, account, **kwargs):
-        return (user:=self.dao.get_user_with_account(account)) and user()
+    def get_user_with_account(self, account, xy=True, **kwargs):
+        return (user:=self.dao.get_user_with_account(account, xy)) and user()
 
 
