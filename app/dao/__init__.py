@@ -9,7 +9,7 @@ class Dao:
     def _get_condition(self, condition, condition_like=False):
         _condition = list()
         for key, value in condition.items():
-            _condition.append(getattr(self.module, key).like(value) if condition_like else getattr(self.module, key) == value)
+            _condition.append(getattr(self.module, key).like(value) if condition_like and isinstance(value, str) else getattr(self.module, key) == value)
         return _condition
 
     def get(self, condition=None, offset=None, limit=None, reverse=False, condition_like=False):
