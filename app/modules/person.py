@@ -16,10 +16,10 @@ class Person(Module):
     xy = Column(Boolean, default=True, comment="软删除")
 
     def __call__(self, *args, **kwargs):
-        _return = super().__call__()
+        _return = super().__call__(*args, **kwargs)
         _return.update({
-            "phone": [i() for i in self.phone_from_person],
-            "mail": [i() for i in self.mail_from_person]
+            "phone": [i(*args, **kwargs) for i in self.phone_from_person],
+            "mail": [i(*args, **kwargs) for i in self.mail_from_person]
         })
         return _return
 

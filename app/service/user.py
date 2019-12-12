@@ -15,4 +15,8 @@ class ServiceUser(Service):
     def get_user_with_account(self, account, xy=True, **kwargs):
         return (user:=self.dao.get_user_with_account(account, xy)) and user()
 
+    @DB.transaction(auto_commit=False)
+    def get_all_user_del_password(self, condition=None, offset=None, limit=None, reverse=False, condition_like=False, **kwargs):
+        return [user(del_list=["password"]) for user in self.dao.get(condition, offset, limit, reverse, condition_like)]
+
 

@@ -14,9 +14,9 @@ class User(Module):
     xy = Column(Boolean, default=True, comment="软删除")
 
     def __call__(self, *args, **kwargs):
-        _return = super().__call__()
+        _return = super().__call__(*args, **kwargs)
         _return.update({
-            "person": self.person() if self.person_id else None
+            "person": self.person(*args, **kwargs) if self.person_id else None
         })
         return _return
 
