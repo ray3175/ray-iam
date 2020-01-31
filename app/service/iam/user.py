@@ -1,5 +1,4 @@
 from ...lib.database import DB
-from ...dao import Dao
 from .. import Service
 from ..user import ServiceUser
 from ..person import ServicePerson
@@ -8,8 +7,8 @@ from ..mail import ServiceMail
 
 
 class ServiceIamUser(Service):
-    def __init__(self, dao=Dao):
-        super().__init__(dao)
+    def __init__(self):
+        super().__init__()
 
     @DB.transaction
     def add_user(self, account, password, id_card, name, sex, birth_date, birth_place, native_place, nationality, phone, mail, **kwargs):

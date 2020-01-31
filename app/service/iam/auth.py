@@ -2,15 +2,14 @@ from threading import Thread
 import requests
 from ...lib.cache import Cache
 from ...common.hash import RayIamHash
-from ...dao import Dao
 from .. import Service
 from ..user import ServiceUser
 from ..project import ServiceProject
 
 
 class ServiceIamAuth(Service):
-    def __init__(self, dao=Dao):
-        super().__init__(dao)
+    def __init__(self):
+        super().__init__()
 
     def __defined_http_params_with_project(self, hash_account, url_key):
         self.__project = ServiceProject().get({"active": True})
