@@ -12,3 +12,12 @@ def auth(func):
     return varify
 
 
+def max_auth(func):
+    @wraps(func)
+    def varify(*args, **kwargs):
+        if not ServiceAuth().ray_iam_max_auth(session.get("account"), auth=99):
+            abort(401)
+        return func(*args, **kwargs)
+    return varify
+
+

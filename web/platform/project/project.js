@@ -1,6 +1,6 @@
 import { addProject, searchProject, updateProject, destroyProject } from "./project-action.js";
-import { table } from "./table.js"
-import { pageButtonGroup } from "../../component/page-button-group/page-button-group.js"
+import { table } from "./table.js";
+import { pageButtonGroup } from "../../component/page-button-group/page-button-group.js";
 import { getProject } from "../../api/project/project.js";
 
 

@@ -1,4 +1,5 @@
 import { navBar } from "../../../component/navbar/navbar.js";
+import { updatePassword } from "./update-password.js";
 
 
 var header = new Vue({
@@ -13,5 +14,11 @@ var header = new Vue({
     }
 });
 
+var main = new Vue({
+    el: "#main",
+    components: {
+        "update-password": updatePassword
+    }
+});
 
 

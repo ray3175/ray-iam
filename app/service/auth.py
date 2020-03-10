@@ -11,6 +11,9 @@ class ServiceAuth(Service):
     def ray_iam_auth(self, account, password):
         return ServiceAdministrator().ray_iam_auth(account, password)
 
+    def ray_iam_max_auth(self, account, auth=99):
+        return ServiceAdministrator().ray_iam_max_auth(account, auth)
+
     @DB.transaction(auto_commit=False)
     def project_iam_auth(self, name, auth_code, **kwargs):
         return ServiceProject().project_iam_auth(name, auth_code, **kwargs)

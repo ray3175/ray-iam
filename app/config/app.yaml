@@ -24,7 +24,7 @@ hash: &hash
 database: &database
   scheme: mysql+pymysql
   user: root
-  password: 123456
+  password: 123@?456
   host: 127.0.0.1
   port: 3306
   db: ray_iam
