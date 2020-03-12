@@ -12,3 +12,10 @@ class Mail(Module):
     person = relationship("Person", backref="mail_from_person")
     xy = Column(Boolean, default=True, comment="软删除")
 
+    def __call__(self, *args, **kwargs):
+        _return = super().__call__(*args, **kwargs)
+        if kwargs.get("add_column") and "person" in kwargs["add_column"]:
+            kwargs["add_column"].remove("person")
+            _return.update({"person": self.person(*args, **kwargs)})
+        return _return
+

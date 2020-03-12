@@ -1,16 +1,15 @@
 from sqlalchemy import Column, ForeignKey, String, BigInteger, Boolean
 from sqlalchemy.orm import relationship
-from ..lib.database.module import Module
+from ...lib.database.module import Module
 
 
-class User(Module):
-    __tablename__ = "user"
+class WeChatUser(Module):
+    __tablename__ = "we_chat_user"
 
-    id = Column(BigInteger, primary_key=True, comment="用户账号ID")
-    account = Column(String(32), unique=True, nullable=False, comment="用户账号")
-    password = Column(String(64), nullable=False, comment="用户密码")
+    id = Column(BigInteger, primary_key=True, comment="微信用户ID")
+    openid = Column(String(256), index=True, nullable=False, comment="微信openid")
     person_id = Column(BigInteger, ForeignKey("person.id", ondelete="SET NULL"), index=True, comment="用户ID")
-    person = relationship("Person", backref="user_from_person")
+    person = relationship("Person", backref="we_chat_user_from_person")
     xy = Column(Boolean, default=True, comment="软删除")
 
     def __call__(self, *args, **kwargs):

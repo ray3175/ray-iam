@@ -4,4 +4,5 @@ from .person import Person
 from .phone import Phone
 from .mail import Mail
 from .project import Project
+from .we_chat.user import WeChatUser
 

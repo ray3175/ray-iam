@@ -14,7 +14,7 @@ class ServiceIamUser(Service):
     def add_user(self, account, password, id_card, name, sex, birth_date, birth_place, native_place, nationality, phone, mail, **kwargs):
         person_id = None
         if id_card:
-            person_id = person[0]["id"] if (person:=ServicePerson().get({"id_card": id_card}, **kwargs)) else ServicePerson().add_person(id_card, name, sex, birth_date, birth_place, native_place, nationality, **kwargs)["id"]
+            person_id = person.id if (person:=ServicePerson().get_person_obj_with_id_card(id_card, **kwargs)) else ServicePerson().add_person(id_card, name, sex, birth_date, birth_place, native_place, nationality, **kwargs)["id"]
         if person_id:
             if phone:
                 ServicePhone().add({"phone": phone, "person_id": person_id}, **kwargs)

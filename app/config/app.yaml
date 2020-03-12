@@ -39,6 +39,9 @@ cache: &cache
     auth-db:
       db: 9
       ex: 86400
+    we-chat-db:
+      db: 10
+      ex: 86400
   mongodb: &mongodb
     host: 127.0.0.1
     port: 27017

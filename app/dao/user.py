@@ -9,6 +9,9 @@ class DaoUser(Dao):
     def get_user(self, _id):
         return self.session.query(self.module).filter_by(id=_id).first()
 
-    def get_user_with_account(self, account, xy=True):
-        return self.session.query(self.module).filter(self.module.account == account, self.module.xy == xy).first()
+    def get_user_with_account(self, account, xy=None):
+        condition = [self.module.account == account]
+        if xy is not None:
+            condition.append(self.module.xy == xy)
+        return self.session.query(self.module).filter(*condition).first()
 
