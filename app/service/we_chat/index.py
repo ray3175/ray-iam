@@ -10,6 +10,7 @@ from .user import ServiceWeChatUser
 class ServiceWeChat(Service):
     def __init__(self):
         super().__init__()
+        self.__token_config = AppConfig()["token-config"]
         self.__we_chat_config = AppConfig()["we_chat"]
         self.__app_id = self.__we_chat_config["appid"]
         self.__secret = self.__we_chat_config["secret"]
@@ -41,7 +42,7 @@ class ServiceWeChat(Service):
         session_key = rsp_json.get("session_key")
         token = self.new_token(openid, session_key)
         if we_chat_user:=self.get_we_chat_user_with_openid_priority_cache_redis(token, lambda : ServiceWeChatUser().get_we_chat_user_with_openid(openid)):
-            we_chat_user.update({"token": token})
+            we_chat_user.update({self.__token_config["key"]: token})
         return we_chat_user
 
     def add_user_from_we_chat_code(self, code, account, password, id_card, name, sex, birth_date, birth_place, native_place, nationality, phone, mail):

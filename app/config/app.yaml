@@ -16,6 +16,9 @@ cookie-config: &cookie-config
   secure: false
   httponly: true
 
+token-config: &token-config:
+  key: xy-token
+
 hash: &hash
   hash_type: sha256
   salt: ray-iam
@@ -68,6 +71,8 @@ environment-product:
     <<: *flask-config
   cookie-config:
     <<: *cookie-config
+  token-config:
+    <<: *token-config
   hash:
     <<: *hash
   database:
@@ -100,6 +105,8 @@ environment-development:
     <<: *flask-config
   cookie-config:
     <<: *cookie-config
+  token-config:
+    <<: *token-config
   hash:
     <<: *hash
   database:
@@ -119,6 +126,8 @@ environment-test:
     <<: *flask-config
   cookie-config:
     <<: *cookie-config
+  token-config:
+    <<: *token-config
   hash:
     <<: *hash
   database:
