@@ -1,5 +1,6 @@
 __all__ = [
     "auth",
-    "user"
+    "user",
+    "we_chat"
 ]
 
