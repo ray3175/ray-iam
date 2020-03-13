@@ -16,7 +16,7 @@ cookie-config: &cookie-config
   secure: false
   httponly: true
 
-token-config: &token-config:
+token-config: &token-config
   key: xy-token
 
 hash: &hash
