@@ -23,7 +23,7 @@ def index():
         limit = ValueTransform.intstr2int(request.args.get("limit"))
         reverse = ValueTransform.boolstr2bool(request.args.get("reverse"))
         condition_like = ValueTransform.boolstr2bool(request.args.get("condition_like"))
-        if isinstance(data:=ServiceUser().get(condition, offset, limit, reverse, condition_like), list):
+        if isinstance(data:=ServiceUser().get(condition, offset, limit, reverse, condition_like, add_column=["person", "phone", "mail", "we_chat_user"]), list):
             rsp["code"] = 200
             rsp["data"] = data
             rsp["msg"] = "获取用户成功！"
