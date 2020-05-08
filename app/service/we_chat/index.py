@@ -1,13 +1,15 @@
 import requests
 from xy.exception import XYException, XYInfo
 from ...config import AppConfig
-from ...lib.cache import Cache
+from ...lib.cache.redis import CacheRedis
 from ...common.hash import RayIamHash
 from .. import Service
 from .user import ServiceWeChatUser
 
 
 class ServiceWeChat(Service):
+    cache_redis = CacheRedis()
+
     def __init__(self):
         super().__init__()
         self.__token_config = AppConfig()["token-config"]
@@ -30,7 +32,7 @@ class ServiceWeChat(Service):
             raise XYException(e)
         return data
 
-    @Cache.cache_redis("we_chat", "token")
+    @cache_redis.cache("we_chat", "token")
     def get_we_chat_user_with_openid_priority_cache_redis(self, token, call=None):
         if callable(call):
             call = call()

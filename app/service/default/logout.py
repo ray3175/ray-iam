@@ -1,4 +1,4 @@
-from ...lib.cache import Cache
+from ...lib.cache.memory import CacheMemory
 from .. import Service
 
 
@@ -7,5 +7,5 @@ class ServiceDefaultLogout(Service):
         super().__init__()
 
     def auth_verify(self, account):
-        return Cache.memory.get("ray-iam-administrator", {}).pop(account, None)
+        return CacheMemory().memory.get("ray-iam-administrator", {}).pop(account, None)
 

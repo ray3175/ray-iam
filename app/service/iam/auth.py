@@ -1,6 +1,6 @@
 from threading import Thread
 import requests
-from ...lib.cache import Cache
+from ...lib.cache.redis import CacheRedis
 from ...common.hash import RayIamHash
 from .. import Service
 from ..user import ServiceUser
@@ -8,6 +8,8 @@ from ..project import ServiceProject
 
 
 class ServiceIamAuth(Service):
+    cache_redis = CacheRedis()
+
     def __init__(self):
         super().__init__()
 
@@ -29,7 +31,7 @@ class ServiceIamAuth(Service):
             i.start()
         return t_pool
 
-    @Cache.cache_redis("auth", "hash_account")
+    @cache_redis.cache("auth", "hash_account")
     def get_user_with_hash_account(self, hash_account, call=None):
         if callable(call):
             call = call()
@@ -51,6 +53,6 @@ class ServiceIamAuth(Service):
         return True
 
     def delete_hash_account_from_auth_redis(self, hash_account):
-        return Cache.auth_redis.delete(hash_account)
+        return CacheRedis().auth_redis.delete(hash_account)
 
 
