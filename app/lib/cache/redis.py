@@ -1,6 +1,7 @@
 from functools import wraps
 import redis
 from xy.decorator.singleton import Singleton
+from xy.exception import XYException
 from ...config import AppConfig
 from . import Cache
 
@@ -14,11 +15,7 @@ class CacheRedis(Cache):
         else:
             import pickle
             self.__serialize = pickle
-        try:
             self.__init_redis()
-            self.__redis_available = True
-        except:
-            self.__redis_available = False
 
     def __init_redis(self):
         redis_config = AppConfig()["cache"]["redis"]
@@ -62,20 +59,28 @@ class CacheRedis(Cache):
         :param args_name: 作为 key 的参数名称
         :param serial: 是否序列化
         """
-        _redis = getattr(self, f"{name}_redis") if self.__redis_available else None
+        _redis = getattr(self, f"{name}_redis")
         def cache_action(func):
             @wraps(func)
             def action(*args, **kwargs):
-                if _redis:
-                    args_value = self._extract_args_value(func, args_name, *args, **kwargs)
-                    if _return:=_redis.get(args_value):
-                        if serial:
-                            _return = self.__serialize.loads(_return)
-                    else:
-                        if _return:=func(*args, **kwargs):
-                            _redis.set(args_value, self.__serialize.dumps(_return) if serial else _return, ex=getattr(self, f"{name}_redis_config")["ex"])
+                args_value = self._extract_args_value(func, args_name, *args, **kwargs)
+                try:
+                    _return = _redis.get(args_value)
+                except redis.exceptions.ConnectionError:
+                    _return = None
+                except Exception as e:
+                    raise XYException(f"Redis服务出现异常！\n\t{e}")
+                if _return:
+                    if serial:
+                        _return = self.__serialize.loads(_return)
                 else:
-                    _return = func(*args, **kwargs)
+                    if _return:=func(*args, **kwargs):
+                        try:
+                            _redis.set(args_value, self.__serialize.dumps(_return) if serial else _return, ex=getattr(self, f"{name}_redis_config")["ex"])
+                        except redis.exceptions.ConnectionError:
+                            pass
+                        except Exception as e:
+                            raise XYException(f"Redis服务出现异常！\n\t{e}")
                 return _return
             return action
         return cache_action
