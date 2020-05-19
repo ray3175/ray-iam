@@ -33,9 +33,11 @@ class CacheMemory(Cache):
                             else:
                                 self.__memory[name] = {args_value: _return}
                 else:
-                    if not (_return:=self.__memory.get(name)):
+                    if not self.__memory.get(name):
                         if _return:=func(*args, **kwargs):
                             self.__memory = {name: _return}
+                    else:
+                        _return = None
                 return _return
             return action
         return cache_action

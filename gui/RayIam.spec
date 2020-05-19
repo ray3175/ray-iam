@@ -6,7 +6,7 @@ block_cipher = None
 
 
 a = Analysis(['run.py'],
-             pathex=['E:\\git\\ray-iam\\gui'],
+             pathex=['D:\\self\\git\\ray-iam\\gui'],
              binaries=[],
              datas=[],
              hiddenimports=[],
@@ -29,7 +29,7 @@ exe = EXE(pyz,
           strip=False,
           upx=True,
           console=False , icon='ray-iam.ico')
-coll = COLLECT(exe, Tree('E:\\git\\ray-iam\\gui\\'),
+coll = COLLECT(exe, Tree('D:\\self\\git\\ray-iam\\gui\\'),
                a.binaries,
                a.zipfiles,
                a.datas,
