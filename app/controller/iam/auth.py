@@ -49,22 +49,30 @@ def auth():
     return response(**rsp)
 
 
-@iam_blueprint.route("/auth/account", methods=["GET"])
+@iam_blueprint.route("/auth/account", methods=["GET", "POST"])
 @cross_origin()
+@json_content_type()
 def auth_account():
     rsp = {
         "code": 500,
         "msg": "服务器出现未知错误，请联系管理员！"
     }
-    if not ((account:=request.args.get("account")) and (password:=request.args.get("password"))):
+    if request.method == "GET":
+        account = request.args.get("account")
+        password = request.args.get("password")
+    else:
+        data = request.get_json()
+        account = data.get("account")
+        password = data.get("password")
+    if not (account and password):
         abort(400)
     if hash_account:=ServiceIamAuth().iam_auth(account, password):
         rsp["code"] = 200
         rsp["msg"] = f"获取用户{cookie_config['key']}成功！"
+        rsp["data"] = hash_account
     else:
         rsp["code"] = 400
         rsp["msg"] = f"获取用户{cookie_config['key']}失败！"
-    rsp["data"] = hash_account
     return response(**rsp)
 
 
