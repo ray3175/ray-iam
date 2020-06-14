@@ -86,7 +86,7 @@ def login():
         "msg": "服务器出现未知错误，请联系管理员！"
     }
     data = request.get_json()
-    if not (hash_account:=data.get(cookie_config["key"]) and data.get("xy-auth")):
+    if not (hash_account:=data.get(cookie_config["key"]) or data.get("xy-auth")):
         abort(400)
     if (service_iam_auth:=ServiceIamAuth()) and (user:=service_iam_auth.get_user_with_hash_account(hash_account)):
         if service_iam_auth.active_hash_account_to_all_project(hash_account, user):
@@ -108,7 +108,7 @@ def logout():
         "msg": "服务器出现未知错误，请联系管理员！"
     }
     data = request.get_json()
-    if not (hash_account:=data.get(cookie_config["key"]) and data.get("xy-auth")):
+    if not (hash_account:=data.get(cookie_config["key"]) or data.get("xy-auth")):
         abort(400)
     if ServiceIamAuth().logout_hash_account_to_all_project(hash_account):
         rsp["code"] = 202
