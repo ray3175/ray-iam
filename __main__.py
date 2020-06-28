@@ -12,5 +12,5 @@ if __name__ == '__main__':
     # nohup sudo python -u __main__.py &
 
     app = create_app()
-    # app.run(**app_config["flask"])
-    app.run(ssl_context=use_ssl(), **app_config["flask"])
+    app.run(**app_config["flask"])
+    # app.run(ssl_context=use_ssl(), **app_config["flask"])

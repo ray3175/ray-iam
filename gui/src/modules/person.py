@@ -15,20 +15,3 @@ class Person(Module):
     nationality = Column(String(32), comment="名族")
     xy = Column(Boolean, default=True, comment="软删除")
 
-    def __call__(self, *args, **kwargs):
-        _return = super().__call__(*args, **kwargs)
-        if kwargs.get("add_column"):
-            if "user" in kwargs["add_column"]:
-                kwargs["add_column"].remove("user")
-                _return.update({"user": [i(*args, **kwargs) for i in self.user_from_person]})
-            if "phone" in kwargs["add_column"]:
-                kwargs["add_column"].remove("phone")
-                _return.update({"phone": [i(*args, **kwargs) for i in self.phone_from_person]})
-            if "mail" in kwargs["add_column"]:
-                kwargs["add_column"].remove("mail")
-                _return.update({"mail": [i(*args, **kwargs) for i in self.mail_from_person]})
-            if "we_chat_user" in kwargs["add_column"]:
-                kwargs["add_column"].remove("we_chat_user")
-                _return.update({"we_chat_user": [i(*args, **kwargs) for i in self.we_chat_user_from_person]})
-        return _return
-
