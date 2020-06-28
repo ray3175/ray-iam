@@ -1,3 +1,4 @@
+from xy.utils.time import Time
 from ...lib.database import DB
 from ...dao.we_chat.user import DaoWeChatUser
 from .. import Service
@@ -27,11 +28,11 @@ class ServiceWeChatUser(Service):
         if mail:
             ServiceMail().add({"mail": mail, "person_id": person_id}, **kwargs)
         if account and password:
-            ServiceUser().add({"account": account, "password": password, "person_id": person_id}, **kwargs)
+            ServiceUser().add({"account": account, "password": password, "person_id": person_id, "register_time": Time().to_string()}, **kwargs)
         return self.add_we_chat_user(openid, person_id, **kwargs)
 
     @DB.transaction
     def add_we_chat_user(self, openid, person_id, **kwargs):
-        return self.dao.add({"openid": openid, "person_id": person_id})
+        return self.dao.add({"openid": openid, "person_id": person_id, "register_time": Time().to_string()})
 
 

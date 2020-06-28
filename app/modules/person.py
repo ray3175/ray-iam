@@ -13,5 +13,6 @@ class Person(Module):
     birth_place = Column(String(64), comment="出生地")
     native_place = Column(String(32), comment="籍贯")
     nationality = Column(String(32), comment="名族")
+    register_time = Column(String(32), comment="登记时间")
     xy = Column(Boolean, default=True, comment="软删除")
 

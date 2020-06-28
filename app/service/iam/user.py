@@ -1,3 +1,4 @@
+from xy.utils.time import Time
 from ...lib.database import DB
 from .. import Service
 from ..user import ServiceUser
@@ -20,6 +21,6 @@ class ServiceIamUser(Service):
                 ServicePhone().add({"phone": phone, "person_id": person_id}, **kwargs)
             if mail:
                 ServiceMail().add({"mail": mail, "person_id": person_id}, **kwargs)
-        return ServiceUser().add({"account": account, "password": password, "person_id": person_id}, **kwargs)
+        return ServiceUser().add({"account": account, "password": password, "person_id": person_id, "register_time": Time().to_string()}, **kwargs)
 
 

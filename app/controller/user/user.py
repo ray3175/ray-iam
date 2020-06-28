@@ -33,7 +33,8 @@ def index():
         abort(400)
     params = dict(account=account,
                   password=password,
-                  person_id=data.get("person_id"))
+                  person_id=data.get("person_id"),
+                  register_time=data.get("register_time"))
     if ServiceUser().add(params):
         rsp["code"] = 200
         rsp["msg"] = "添加用户成功！"
