@@ -8,7 +8,7 @@ class ServicePerson(Service):
     def __init__(self, dao=DaoPerson):
         super().__init__(dao)
 
-    @Session.transaction
+    @Session.transaction(auto_commit=False)
     def get_person_obj_with_id_card(self, id_card):
         return self.dao.get_person_with_id_card(id_card)
 

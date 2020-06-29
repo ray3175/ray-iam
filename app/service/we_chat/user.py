@@ -12,7 +12,6 @@ class ServiceWeChatUser(Service):
     def __init__(self, dao=DaoWeChatUser):
         super().__init__(dao)
 
-    @Session.transaction(auto_commit=False)
     def get_user_with_account(self, account, xy=None):
         return ServiceUser().get_user_with_account(account, xy)
 

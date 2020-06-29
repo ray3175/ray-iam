@@ -8,6 +8,11 @@ from . import DB
 
 class Session(DB):
     @classmethod
+    def _if_dao_set_session(cls, self, session):
+        if isinstance(self.dao, Dao):
+            self.dao.session = session
+
+    @classmethod
     def transaction(cls, auto_commit=True):
         logger = LoggerRun()
         def transaction_action(func):
@@ -15,14 +20,13 @@ class Session(DB):
             def action(*args, **kwargs):
                 self = args[0]
                 if db_session:=g.get("__db_session__"):
-                    self.dao.session = db_session
+                    cls._if_dao_set_session(self, db_session)
                     _return = func(*args, **kwargs)
                     db_session.__commit__ |= bool(auto_commit)
                 else:
                     db_session = g.__db_session__ = cls.Session()
-                    if isinstance(self.dao, Dao):
-                        self.dao.session = db_session
                     db_session.__commit__ = bool(auto_commit)
+                    cls._if_dao_set_session(self, db_session)
                     try:
                         _return = func(*args, **kwargs)
                         if db_session.__commit__:
