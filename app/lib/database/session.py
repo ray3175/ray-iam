@@ -1,6 +1,6 @@
 from functools import wraps
 from flask import g
-from xy.exception import XYException, XYInfo
+from xy.exception import XYException
 from ...common.logger import LoggerRun
 from ...dao import Dao
 from . import DB
