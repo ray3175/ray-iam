@@ -3,8 +3,8 @@ from . import Dao
 
 
 class DaoProject(Dao):
-    def __init__(self, module=Project, session=None):
-        super().__init__(module, session)
+    def __init__(self, module=Project):
+        super().__init__(module)
 
     def get_project(self, _id):
         return self.session.query(self.module).filter_by(id=_id).first()

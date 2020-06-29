@@ -3,7 +3,7 @@ from . import Dao
 
 
 class DaoMail(Dao):
-    def __init__(self, module=Mail, session=None):
-        super().__init__(module, session)
+    def __init__(self, module=Mail):
+        super().__init__(module)
 
 

@@ -3,8 +3,8 @@ from . import Dao
 
 
 class DaoAdministrator(Dao):
-    def __init__(self, module=Administrator, session=None):
-        super().__init__(module, session)
+    def __init__(self, module=Administrator):
+        super().__init__(module)
 
     def get_administrator(self, _id):
         return self.session.query(self.module).filter_by(id=_id).first()

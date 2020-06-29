@@ -3,7 +3,7 @@ from . import Dao
 
 
 class DaoPhone(Dao):
-    def __init__(self, module=Phone, session=None):
-        super().__init__(module, session)
+    def __init__(self, module=Phone):
+        super().__init__(module)
 
 

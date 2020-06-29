@@ -1,6 +1,5 @@
 from flask import request, abort
 from flask_cors import cross_origin
-from xy.exception import XYException
 from ...lib.flask.decorator import json_content_type
 from ...lib.flask.response import response
 from ...service.we_chat.index import ServiceWeChat
@@ -17,16 +16,13 @@ def login():
     code = request.args.get("code")
     if not code:
         abort(400)
-    try:
-        if data:=ServiceWeChat().get_user_with_we_chat_code(code):
-            rsp["code"] = 200
-            rsp["data"] = data
-            rsp["msg"] = "该用户微信认证成功！"
-        else:
-            rsp["code"] = 202
-            rsp["msg"] = "该用户尚未注册！"
-    except XYException as e:
-        rsp["msg"] = e.msg
+    if data:=ServiceWeChat().get_user_with_we_chat_code(code):
+        rsp["code"] = 200
+        rsp["data"] = data
+        rsp["msg"] = "该用户微信认证成功！"
+    else:
+        rsp["code"] = 202
+        rsp["msg"] = "该用户尚未注册！"
     return response(**rsp)
 
 
@@ -51,12 +47,9 @@ def register():
     nationality = data.get("nationality")
     phone = data.get("phone")
     mail = data.get("mail")
-    try:
-        if ServiceWeChat().add_user_from_we_chat_code(code, account, password, id_card, name, sex, birth_date, birth_place, native_place, nationality, phone, mail):
-            rsp["code"] = 200
-            rsp["msg"] = "创建用户成功！"
-    except XYException as e:
-        rsp["msg"] = e.msg
+    if ServiceWeChat().add_user_from_we_chat_code(code, account, password, id_card, name, sex, birth_date, birth_place, native_place, nationality, phone, mail):
+        rsp["code"] = 200
+        rsp["msg"] = "创建用户成功！"
     return response(**rsp)
 
 
@@ -71,12 +64,9 @@ def bind():
     data = request.get_json()
     if not ((code:=data.get("code")) and (account:=data.get("account")) and (password:=data.get("password"))):
         abort(400)
-    try:
-        if ServiceWeChat().bind_user_from_we_chat_code(code, account, password):
-            rsp["code"] = 200
-            rsp["msg"] = "绑定用户成功！"
-    except XYException as e:
-        rsp["msg"] = e.msg
+    if ServiceWeChat().bind_user_from_we_chat_code(code, account, password):
+        rsp["code"] = 200
+        rsp["msg"] = "绑定用户成功！"
     return response(**rsp)
 
 

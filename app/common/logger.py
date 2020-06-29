@@ -20,16 +20,3 @@ class LoggerRun(Logger):
             timed_rotating_params={"when": "d", "suffix": "%Y-%m-%d.log", "extMatch": re.compile("^\d{4}-\d{2}-\d{2}"), "backupCount": 30}
         )
 
-
-@Singleton
-class LoggerOperation(Logger):
-    def __init__(self):
-        super().__init__(
-            name="操作日志",
-            log_name="operation",
-            log_path=os.path.join(global_data["log_path"], "operation"),
-            use_console=False,
-            use_timed_rotating=True,
-            timed_rotating_params={"when": "d", "suffix": "%Y-%m-%d.log", "extMatch": re.compile("^\d{4}-\d{2}-\d{2}"), "backupCount": 360}
-        )
-

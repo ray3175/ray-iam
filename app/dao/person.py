@@ -3,8 +3,8 @@ from . import Dao
 
 
 class DaoPerson(Dao):
-    def __init__(self, module=Person, session=None):
-        super().__init__(module, session)
+    def __init__(self, module=Person):
+        super().__init__(module)
 
     def get_person_with_id_card(self, id_card):
         return self.session.query(self.module).filter_by(id_card=id_card).first()

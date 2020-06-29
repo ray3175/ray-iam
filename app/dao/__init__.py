@@ -1,10 +1,6 @@
-from ..lib.database import DB
-
-
 class Dao:
-    def __init__(self, module=None, session=None):
+    def __init__(self, module):
         self.module = module
-        self.session = session if session else DB.Session()
 
     def _get_condition(self, condition, condition_like=False):
         _condition = list()

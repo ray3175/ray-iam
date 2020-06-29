@@ -3,8 +3,8 @@ from .. import Dao
 
 
 class DaoWeChatUser(Dao):
-    def __init__(self, module=WeChatUser, session=None):
-        super().__init__(module, session)
+    def __init__(self, module=WeChatUser):
+        super().__init__(module)
 
     def get_we_chat_user(self, _id):
         return self.session.query(self.module).filter_by(id=_id).first()

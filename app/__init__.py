@@ -20,8 +20,7 @@ def init_app():
 
 
 def create_app():
-    from .lib.flask.response import response
-    from .lib.flask.redirect import redirect_to_source
+    from .lib.flask.errorhandler import Errorhandler
     from .controller import default_blueprint, administrator_blueprint, project_blueprint, user_blueprint, iam_blueprint, we_chat_blueprint
 
     app.register_blueprint(default_blueprint)
@@ -30,18 +29,6 @@ def create_app():
     app.register_blueprint(user_blueprint)
     app.register_blueprint(iam_blueprint)
     app.register_blueprint(we_chat_blueprint)
-
-    @app.errorhandler(400)
-    def error_400(error):
-        return response(400, msg="参数有误！")
-
-    @app.errorhandler(401)
-    def error_401(error):
-        return response(401, msg="无效的权限！")
-
-    @app.errorhandler(404)
-    def error_404(error):
-        return redirect_to_source("./common/error404.html")
 
     return app
 

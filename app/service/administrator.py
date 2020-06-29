@@ -1,4 +1,4 @@
-from ..lib.database import DB
+from ..lib.database.session import Session
 from ..lib.cache.memory import CacheMemory
 from ..dao.administrator import DaoAdministrator
 from . import Service
@@ -10,12 +10,12 @@ class ServiceAdministrator(Service):
     def __init__(self, dao=DaoAdministrator):
         super().__init__(dao)
 
-    @DB.transaction(auto_commit=False)
-    def get_administrator(self, _id, **kwargs):
+    @Session.transaction(auto_commit=False)
+    def get_administrator(self, _id):
         return (administrator:=self.dao.get_administrator(_id)) and administrator()
 
-    @DB.transaction(auto_commit=False)
-    def get_administrator_with_account(self, account, **kwargs):
+    @Session.transaction(auto_commit=False)
+    def get_administrator_with_account(self, account):
         return (administrator:=self.dao.get_administrator_with_account(account)) and administrator()
 
     @cache_memory.cache("ray-iam-administrator", "account")
