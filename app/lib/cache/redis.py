@@ -15,7 +15,7 @@ class CacheRedis(Cache):
         else:
             import pickle
             self.__serialize = pickle
-            self.__init_redis()
+        self.__init_redis()
 
     def __init_redis(self):
         redis_config = AppConfig()["cache"]["redis"]
