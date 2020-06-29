@@ -37,6 +37,7 @@ class Session(DB):
                         raise XYException("数据库事务出现异常，详情见日志！")
                     finally:
                         db_session.close()
+                        g.pop("__db_session__")
                 return _return
             return action
         return transaction_action(auto_commit) if callable(auto_commit) else transaction_action
