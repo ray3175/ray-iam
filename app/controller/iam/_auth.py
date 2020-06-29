@@ -6,7 +6,7 @@ from ...service.auth import ServiceAuth
 def auth(func):
     @wraps(func)
     def varify(*args, **kwargs):
-        project_name, project_auth_code = request.args.get("project_name"), request.args.get("project_auth_code")
+        project_name, project_auth_code = request.headers.get("project_name") or request.args.get("project_name"), request.headers.get("project_auth_code") or request.args.get("project_auth_code")
         if not ServiceAuth().project_iam_auth(project_name, project_auth_code):
             abort(401)
         return func(*args, **kwargs)
