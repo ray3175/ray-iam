@@ -18,40 +18,20 @@ class CacheRedis(Cache):
         self.__init_redis()
 
     def __init_redis(self):
+        self.__redis_dict = dict()
         redis_config = AppConfig()["cache"]["redis"]
-        self.__project_redis_config = redis_config["project-db"]
-        self.__project_pool = redis.ConnectionPool(password=redis_config["password"], host=redis_config["host"], port=redis_config["port"], db=self.__project_redis_config["db"])
-        self.__project_redis = redis.Redis(connection_pool=self.__project_pool)
-        self.__auth_redis_config = redis_config["auth-db"]
-        self.__auth_pool = redis.ConnectionPool(password=redis_config["password"], host=redis_config["host"], port=redis_config["port"], db=self.__auth_redis_config["db"])
-        self.__auth_redis = redis.Redis(connection_pool=self.__auth_pool)
-        self.__we_chat_redis_config = redis_config["we-chat-db"]
-        self.__we_chat_pool = redis.ConnectionPool(password=redis_config["password"], host=redis_config["host"], port=redis_config["port"], db=self.__we_chat_redis_config["db"])
-        self.__we_chat_redis = redis.Redis(connection_pool=self.__we_chat_pool)
-
-    @property
-    def project_redis_config(self):
-        return self.__project_redis_config
-
-    @property
-    def auth_redis_config(self):
-        return self.__auth_redis_config
-
-    @property
-    def we_chat_redis_config(self):
-        return self.__we_chat_redis_config
-
-    @property
-    def project_redis(self):
-        return self.__project_redis
-
-    @property
-    def auth_redis(self):
-        return self.__auth_redis
-
-    @property
-    def we_chat_redis(self):
-        return self.__we_chat_redis
+        project_config = redis_config["project-db"]
+        project_pool = redis.ConnectionPool(password=redis_config["password"], host=redis_config["host"], port=redis_config["port"], db=project_config["db"])
+        project_redis = redis.Redis(connection_pool=project_pool)
+        auth_config = redis_config["auth-db"]
+        auth_pool = redis.ConnectionPool(password=redis_config["password"], host=redis_config["host"], port=redis_config["port"], db=auth_config["db"])
+        auth_redis = redis.Redis(connection_pool=auth_pool)
+        we_chat_config = redis_config["we-chat-db"]
+        we_chat_pool = redis.ConnectionPool(password=redis_config["password"], host=redis_config["host"], port=redis_config["port"], db=we_chat_config["db"])
+        we_chat_redis = redis.Redis(connection_pool=we_chat_pool)
+        self.__redis_dict["project"] = dict(config=project_config, pool=project_pool, redis=project_redis)
+        self.__redis_dict["auth"] = dict(config=auth_config, pool=auth_pool, redis=auth_redis)
+        self.__redis_dict["we_chat"] = dict(config=we_chat_config, pool=we_chat_pool, redis=we_chat_redis)
 
     def cache(self, name, args_name, serial=True, *args, **kwargs):
         """
@@ -59,7 +39,7 @@ class CacheRedis(Cache):
         :param args_name: 作为 key 的参数名称
         :param serial: 是否序列化
         """
-        _redis = getattr(self, f"{name}_redis")
+        _redis = self.__redis_dict[name]["redis"]
         def cache_action(func):
             @wraps(func)
             def action(*args, **kwargs):
@@ -76,7 +56,7 @@ class CacheRedis(Cache):
                 else:
                     if _return:=func(*args, **kwargs):
                         try:
-                            _redis.set(args_value, self.__serialize.dumps(_return) if serial else _return, ex=getattr(self, f"{name}_redis_config")["ex"])
+                            _redis.set(args_value, self.__serialize.dumps(_return) if serial else _return, ex=self.__redis_dict[name]["config"]["ex"])
                         except redis.exceptions.ConnectionError:
                             pass
                         except Exception as e:

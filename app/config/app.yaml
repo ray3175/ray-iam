@@ -40,7 +40,7 @@ cache: &cache
     host: 127.0.0.1
     port: 6379
     project-db:
-      db: 3
+      db: 8
       ex: 604800
     auth-db:
       db: 9
