@@ -1,9 +1,13 @@
 from ..lib.database.session import Session
+from ..dao import Dao
 
 
 class Service:
     def __init__(self, dao=None):
         self.dao = dao() if callable(dao) else dao
+
+    def new_dao(self, module=None):
+        self.dao = Dao(module)
 
     @Session.transaction(auto_commit=False)
     def get(self, condition=None, offset=None, limit=None, reverse=False, condition_like=False, add_column=[], del_column=[]):
