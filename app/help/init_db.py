@@ -3,17 +3,18 @@ from ..lib.database import DB
 
 
 class InitDB(DB):
+    def create_database(self):
+        connection = DB.engine.connect()
+        connection.execute("create database if not exists ray_iam default charset utf8mb4;")
+
     def create_db(self):
-        """
-        如果没有创建数据库，先执行下列命令创建数据库：
-            create database ray_iam default charset utf8mb4;
-        """
         from .. import modules
-        Module.metadata.create_all(self.engine)
+        self.create_database()
+        Module.metadata.create_all(self.engine_db)
 
     def drop_db(self):
         from .. import modules
-        Module.metadata.drop_all(self.engine)
+        Module.metadata.drop_all(self.engine_db)
 
     def add_administrator(self):
         from ..modules.administrator import Administrator
