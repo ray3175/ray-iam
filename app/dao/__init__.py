@@ -5,8 +5,11 @@ class Dao:
     def __init__(self, module):
         self.module = module
 
-    def new_session(self):
+    def init_session(self):
         self.session = DB.Session()
+
+    def new_session(self):
+        return DB.Session()
 
     def _get_condition(self, condition, condition_like=False):
         _condition = list()
