@@ -12,8 +12,8 @@ class ServiceWeChat(Service):
 
     def __init__(self):
         super().__init__()
-        self.__token_config = AppConfig()["token-config"]
-        self.__we_chat_config = AppConfig()["we_chat"]
+        self.__token_config = AppConfig().flask["token-config"]
+        self.__we_chat_config = AppConfig()["third-party-platform"]["we_chat"]
         self.__app_id = self.__we_chat_config["appid"]
         self.__secret = self.__we_chat_config["secret"]
         self.__api = self.__we_chat_config["api"]

@@ -1,0 +1,53 @@
+serialize: &serialize pickle
+
+redis: &redis
+  password: null
+  host: 127.0.0.1
+  port: 6379
+  project-db:
+    db: 8
+    ex: 604800
+  auth-db:
+    db: 9
+    ex: 86400
+  we-chat-db:
+    db: 10
+    ex: 86400
+
+mongodb: &mongodb
+  host: 127.0.0.1
+  port: 27017
+
+
+environment-product:
+  serialize: *serialize
+  redis:
+    password: null
+    host: 127.0.0.1
+    port: 6379
+    <<: *redis
+  mongodb:
+    host: 127.0.0.1
+    port: 27017
+    <<: *mongodb
+
+
+environment-development:
+  serialize: *serialize
+  redis:
+    <<: *redis
+  mongodb:
+    <<: *mongodb
+
+
+environment-test:
+  serialize: *serialize
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    <<: *redis
+  mongodb:
+    host: 127.0.0.1
+    port: 27017
+    <<: *mongodb
+

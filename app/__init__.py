@@ -15,8 +15,8 @@ def init_app():
     global_data["log_path"] = os.path.join(global_data["root_path"], "log")
     app_config = AppConfig()
 
-    app.config["SECRET_KEY"] = app_config["flask-config"]["SECRET_KEY"]
-    app.config["PERMANENT_SESSION_LIFETIME"] = datetime.timedelta(**app_config["flask-config"]["PERMANENT_SESSION_LIFETIME"])
+    app.config["SECRET_KEY"] = app_config.flask["flask-config"]["SECRET_KEY"]
+    app.config["PERMANENT_SESSION_LIFETIME"] = datetime.timedelta(**app_config.flask["flask-config"]["PERMANENT_SESSION_LIFETIME"])
 
 
 def create_app():

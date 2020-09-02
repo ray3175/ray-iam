@@ -1,0 +1,58 @@
+flask: &flask
+  host: 0.0.0.0
+  port: 3399
+  threaded: true
+  debug: true
+
+flask-config: &flask-config
+  SECRET_KEY: ray-iam
+  PERMANENT_SESSION_LIFETIME:
+    days: 1
+
+cookie-config: &cookie-config
+  key: xy-auth
+  max_age: 86400
+  domain: null
+  secure: false
+  httponly: true
+
+ssl: &ssl
+  private_key: 2_ray3175.cn.key
+  public_key: 1_ray3175.cn_bundle.crt
+
+
+environment-product:
+  flask:
+    debug: false
+    <<: *flask
+  flask-config:
+    SECRET_KEY: ray-iam
+    <<: *flask-config
+  cookie-config:
+    <<: *cookie-config
+  ssl:
+    <<: *ssl
+
+
+environment-development:
+  flask:
+    <<: *flask
+  flask-config:
+    <<: *flask-config
+  cookie-config:
+    <<: *cookie-config
+  ssl:
+    <<: *ssl
+
+
+environment-test:
+  flask:
+    debug: false
+    <<: *flask
+  flask-config:
+    <<: *flask-config
+  cookie-config:
+    <<: *cookie-config
+  ssl:
+    <<: *ssl
+

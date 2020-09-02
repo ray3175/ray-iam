@@ -1,0 +1,38 @@
+scheme: &scheme mysql+pymysql
+user: &user root
+password: &password 123456
+host: &host 127.0.0.1
+port: &port 3306
+db: &db ray_iam
+charset: &charset utf8mb4
+
+
+environment-product:
+  scheme: *scheme
+  user: *user
+  password: *password
+  host: *host
+  port: *port
+  db: *db
+  charset: *charset
+
+
+environment-development:
+  scheme: *scheme
+  user: *user
+  password: *password
+  host: *host
+  port: *port
+  db: *db
+  charset: *charset
+
+
+environment-test:
+  scheme: *scheme
+  user: *user
+  password: *password
+  host: *host
+  port: *port
+  db: *db
+  charset: *charset
+

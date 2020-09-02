@@ -8,7 +8,7 @@ from .. import iam_blueprint
 from ._auth import auth
 
 
-token_config = AppConfig()["token-config"]
+token_config = AppConfig().app["token-config"]
 
 
 @iam_blueprint.route("/we_chat", methods=["GET", "POST"])

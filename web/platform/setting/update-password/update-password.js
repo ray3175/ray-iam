@@ -3,7 +3,7 @@ import { getAdministratorWithSelf, putAdministratorWithSelf } from "../../../api
 
 
 var updatePassword = {
-    template: '<div class="layout"><div class="layout-main"><div class="self-layout"><div class="self-title">个人信息</div><div class="self-account">{{ account }}</div><div class="self-password"><input v-model="passwordOld" class="self-input" type="password" placeholder="旧密码。。。"></div><div class="self-password"><input v-model="password" class="self-input" type="password" placeholder="新密码。。。"></div><div class="self-password"><input v-model="passwordConfirm" class="self-input" type="password" placeholder="确认新密码。。。"></div><button @click="confirmClick()" class="self-confirm">确认更新</button></div></div></div>',
+    template: '<div class="layout"><div class="layout-main"><div class="self-layout"><div class="self-title">个人信息</div><div class="self-account">{{ account }}</div><div class="self-password"><input v-model="passwordOld" class="self-input" type="password" placeholder="旧密码。。。"></div><div class="self-password"><input v-model="password" class="self-input" type="password" placeholder="新密码。。。"></div><div class="self-password"><input v-model="passwordConfirm" class="self-input" type="password" placeholder="确认新密码。。。"></div><button @click="confirmClick()" class="self-confirm self-button">确认更新</button></div></div></div>',
     data() {
         return {
             account: null,

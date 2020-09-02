@@ -9,7 +9,7 @@ from . import Cache
 @Singleton
 class CacheRedis(Cache):
     def __init__(self):
-        if AppConfig()["cache"]["serialize"] == "json":
+        if AppConfig().cache["serialize"] == "json":
             import json
             self.__serialize = json
         else:
@@ -19,7 +19,7 @@ class CacheRedis(Cache):
 
     def __init_redis(self):
         self.__redis_dict = dict()
-        redis_config = AppConfig()["cache"]["redis"]
+        redis_config = AppConfig().cache["redis"]
         project_config = redis_config["project-db"]
         project_pool = redis.ConnectionPool(password=redis_config["password"], host=redis_config["host"], port=redis_config["port"], db=project_config["db"])
         project_redis = redis.Redis(connection_pool=project_pool)

@@ -1,0 +1,23 @@
+we_chat: &we_chat
+  appid: wxa1bf05b0e7da32e2
+  secret: 0b107c9b82e5796c6b69caea73ba1939
+  api:
+    code2Session:
+      url: https://api.weixin.qq.com/sns/jscode2session
+      grant_type: authorization_code
+
+
+environment-product:
+  we_chat:
+    <<: *we_chat
+
+
+environment-development:
+  we_chat:
+    <<: *we_chat
+
+
+environment-test:
+  we_chat:
+    <<: *we_chat
+

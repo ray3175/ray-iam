@@ -8,7 +8,7 @@ from .. import iam_blueprint
 from ._auth import auth as _auth
 
 
-cookie_config = AppConfig()["cookie-config"]
+cookie_config = AppConfig().flask["cookie-config"]
 
 
 @iam_blueprint.route("/", methods=["GET"])
