@@ -17,6 +17,6 @@ class LoggerRun(Logger):
             log_path=os.path.join(global_data["log_path"], "run"),
             use_console=False,
             use_timed_rotating=True,
-            timed_rotating_params={"when": "d", "suffix": "%Y-%m-%d.log", "extMatch": re.compile("^\d{4}-\d{2}-\d{2}"), "backupCount": 30}
+            timed_rotating_params={"when": "d", "suffix": "%Y-%m-%d.log", "extMatch": re.compile(r"^\d{4}-\d{2}-\d{2}"), "backupCount": 30}
         )
 
