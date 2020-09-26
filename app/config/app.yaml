@@ -6,18 +6,12 @@ hash: &hash
   salt: ray-iam
   iterations: 9
 
-ssl: &ssl
-  private_key: 2_ray3175.cn.key
-  public_key: 1_ray3175.cn_bundle.crt
-
 
 environment-product:
   token-config:
     <<: *token-config
   hash:
     <<: *hash
-  ssl:
-    <<: *ssl
 
 
 environment-development:
@@ -25,8 +19,6 @@ environment-development:
     <<: *token-config
   hash:
     <<: *hash
-  ssl:
-    <<: *ssl
 
 
 environment-test:
@@ -34,6 +26,4 @@ environment-test:
     <<: *token-config
   hash:
     <<: *hash
-  ssl:
-    <<: *ssl
 

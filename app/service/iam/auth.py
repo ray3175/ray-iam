@@ -53,6 +53,6 @@ class ServiceIamAuth(Service):
         return True
 
     def delete_hash_account_from_auth_redis(self, hash_account):
-        return CacheRedis().auth_redis.delete(hash_account)
+        return CacheRedis().get_redis_info_from_redis_dict("auth")["redis"].delete(hash_account)
 
 

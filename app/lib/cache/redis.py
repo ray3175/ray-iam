@@ -33,6 +33,9 @@ class CacheRedis(Cache):
         self.__redis_dict["auth"] = dict(config=auth_config, pool=auth_pool, redis=auth_redis)
         self.__redis_dict["we_chat"] = dict(config=we_chat_config, pool=we_chat_pool, redis=we_chat_redis)
 
+    def get_redis_info_from_redis_dict(self, name):
+        return self.__redis_dict[name]
+
     def cache(self, name, args_name, serial=True, *args, **kwargs):
         """
         :param name: redis连接池名称，如：project

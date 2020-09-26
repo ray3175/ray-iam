@@ -4,8 +4,8 @@ from .. import AppConfig
 
 class AppConfigSSL:
     config_ssl_path = os.path.dirname(os.path.abspath(__file__))
-    private_key = AppConfig().app["ssl"]["private_key"]
-    public_key = AppConfig().app["ssl"]["public_key"]
+    private_key = AppConfig().flask["ssl"]["private_key"]
+    public_key = AppConfig().flask["ssl"]["public_key"]
 
     @classmethod
     def get_ssl_path(cls):
