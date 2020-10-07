@@ -5,8 +5,6 @@ from .project import ServiceProject
 
 
 class ServiceAuth(Service):
-    cache_redis = CacheRedis()
-
     def __init__(self):
         super().__init__()
 
@@ -19,6 +17,6 @@ class ServiceAuth(Service):
     def project_iam_auth_from_DB(self, name, auth_code):
         return (project:=ServiceProject().project_iam_auth(name, auth_code)) and project()
 
-    @cache_redis.cache("project", "name")
+    @CacheRedis().cache("project", "name")
     def project_iam_auth(self, name, auth_code):
         return self.project_iam_auth_from_DB(name, auth_code)

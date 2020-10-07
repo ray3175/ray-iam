@@ -8,8 +8,6 @@ from .user import ServiceWeChatUser
 
 
 class ServiceWeChat(Service):
-    cache_redis = CacheRedis()
-
     def __init__(self):
         super().__init__()
         self.__token_config = AppConfig().app["token-config"]
@@ -32,7 +30,7 @@ class ServiceWeChat(Service):
             raise XYException(e)
         return data
 
-    @cache_redis.cache("we_chat", "token")
+    @CacheRedis().cache("we_chat", "token")
     def get_we_chat_user_with_openid_priority_cache_redis(self, token, call=None):
         if callable(call):
             call = call()

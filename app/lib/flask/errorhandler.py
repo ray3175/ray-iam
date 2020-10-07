@@ -23,5 +23,5 @@ class Errorhandler:
     @staticmethod
     @app.errorhandler(XYException)
     def error_xy(error):
-        return response(code=500, msg=error.msg, level=error.level)
+        return response(code=500, msg=error.msg)
 

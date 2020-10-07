@@ -8,8 +8,6 @@ from ..project import ServiceProject
 
 
 class ServiceIamAuth(Service):
-    cache_redis = CacheRedis()
-
     def __init__(self):
         super().__init__()
 
@@ -31,7 +29,7 @@ class ServiceIamAuth(Service):
             i.start()
         return t_pool
 
-    @cache_redis.cache("auth", "hash_account")
+    @CacheRedis().cache("auth", "hash_account")
     def get_user_with_hash_account(self, hash_account, call=None):
         if callable(call):
             call = call()
