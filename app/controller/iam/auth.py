@@ -24,20 +24,11 @@ def index():
 @cross_origin()
 @json_content_type()
 def auth():
-    if request.method == "GET":
-        if not (_redirect:=request.args.get("redirect", "") or request.headers.get("Referer", "")):
-            abort(401)
-        params = f"{'&' if '?' in _redirect else '?'}{cookie_config['key']}={hash_account}" if (account:=request.args.get("account")) and (password:=request.args.get("password")) and (hash_account:=ServiceIamAuth().iam_auth(account, password)) else ""
-        rsp = make_response(redirect(_redirect + params))
-        if hash_account:
-            rsp.set_cookie(value=hash_account, **cookie_config)
-        return rsp
     rsp = {
         "code": 500,
         "msg": "服务器出现未知错误，请联系管理员！"
     }
-    data = request.get_json()
-    if not (hash_account:=data.get(cookie_config["key"])):
+    if not (hash_account:=request.args.get(cookie_config["key"]) if request.method == "GET" else request.get_json().get(cookie_config["key"])):
         abort(400)
     if user:=ServiceIamAuth().get_user_with_hash_account(hash_account):
         rsp["code"] = 200
@@ -47,6 +38,19 @@ def auth():
         rsp["msg"] = "用户认证失败！"
     rsp["data"] = user
     return response(**rsp)
+
+
+@iam_blueprint.route("/auth/login", methods=["GET"])
+@cross_origin()
+@json_content_type()
+def auth_login():
+    if not (_redirect:=request.args.get("redirect", "") or request.headers.get("Referer", "")):
+        abort(401)
+    params = f"{'&' if '?' in _redirect else '?'}{cookie_config['key']}={hash_account}" if (account:=request.args.get("account")) and (password:=request.args.get("password")) and (hash_account:=ServiceIamAuth().iam_auth(account, password)) else ""
+    rsp = make_response(redirect(_redirect + params))
+    if hash_account:
+        rsp.set_cookie(value=hash_account, **cookie_config)
+    return rsp
 
 
 @iam_blueprint.route("/auth/account", methods=["GET", "POST"])
@@ -76,7 +80,7 @@ def auth_account():
     return response(**rsp)
 
 
-@iam_blueprint.route("/login", methods=["POST"])
+@iam_blueprint.route("/login", methods=["GET", "POST"])
 @cross_origin()
 @_auth
 @json_content_type()
@@ -85,8 +89,7 @@ def login():
         "code": 500,
         "msg": "服务器出现未知错误，请联系管理员！"
     }
-    data = request.get_json()
-    if not (hash_account:=data.get(cookie_config["key"]) or data.get("xy-auth")):
+    if not (hash_account:=request.args.get(cookie_config["key"]) if request.method == "GET" else request.get_json().get(cookie_config["key"])):
         abort(400)
     if (service_iam_auth:=ServiceIamAuth()) and (user:=service_iam_auth.get_user_with_hash_account(hash_account)):
         if service_iam_auth.active_hash_account_to_all_project(hash_account, user):
@@ -98,7 +101,7 @@ def login():
     return response(**rsp)
 
 
-@iam_blueprint.route("/logout", methods=["POST"])
+@iam_blueprint.route("/logout", methods=["GET", "POST"])
 @cross_origin()
 @_auth
 @json_content_type()
@@ -107,8 +110,7 @@ def logout():
         "code": 500,
         "msg": "服务器出现未知错误，请联系管理员！"
     }
-    data = request.get_json()
-    if not (hash_account:=data.get(cookie_config["key"]) or data.get("xy-auth")):
+    if not (hash_account:=request.args.get(cookie_config["key"]) if request.method == "GET" else request.get_json().get(cookie_config["key"])):
         abort(400)
     if ServiceIamAuth().logout_hash_account_to_all_project(hash_account):
         rsp["code"] = 202

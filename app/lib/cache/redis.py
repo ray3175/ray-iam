@@ -36,7 +36,7 @@ class CacheRedis(Cache):
     def get_redis_info_from_redis_dict(self, name):
         return self.__redis_dict[name]
 
-    def cache(self, name, args_name, serial=True, *args, **kwargs):
+    def cache(self, name, args_name, *args, serial=True, refresh=False, **kwargs):
         """
         :param name: redis连接池名称，如：project
         :param args_name: 作为 key 的参数名称
@@ -54,6 +54,8 @@ class CacheRedis(Cache):
                 except Exception as e:
                     raise XYException(f"Redis服务出现异常！\n\t{e}")
                 if _return:
+                    if refresh:
+                        _redis.set(args_value, _return, ex=self.__redis_dict[name]["config"]["ex"])
                     if serial:
                         _return = self.__serialize.loads(_return)
                 else:

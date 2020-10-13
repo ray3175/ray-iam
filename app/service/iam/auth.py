@@ -29,7 +29,7 @@ class ServiceIamAuth(Service):
             i.start()
         return t_pool
 
-    @CacheRedis().cache("auth", "hash_account")
+    @CacheRedis().cache("auth", "hash_account", refresh=True)
     def get_user_with_hash_account(self, hash_account, call=None):
         if callable(call):
             call = call()
