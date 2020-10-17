@@ -1,6 +1,6 @@
 from functools import wraps
 from xy.decorator.singleton import Singleton
-from xy.common.global_data import GlobalData
+from ...common.global_data import GlobalData
 from . import Cache
 
 

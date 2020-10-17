@@ -1,7 +1,7 @@
 import os
 import datetime
 import flask
-from xy.common.global_data import GlobalData
+from .common.global_data import GlobalData
 
 
 app = flask.Flask(__name__, static_folder="../web")

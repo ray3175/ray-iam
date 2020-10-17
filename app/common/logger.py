@@ -1,8 +1,8 @@
 import os
 import re
 from xy.decorator.singleton import Singleton
-from xy.common.global_data import GlobalData
 from xy.common.logger import Logger
+from .global_data import GlobalData
 
 
 global_data = GlobalData()
