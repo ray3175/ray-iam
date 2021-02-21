@@ -3,7 +3,7 @@ user: &user root
 password: &password 123456
 host: &host 127.0.0.1
 port: &port 3306
-db: &db ray_iam
+db: &db ray_sso
 charset: &charset utf8mb4
 
 

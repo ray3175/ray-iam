@@ -1,7 +1,7 @@
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 from kivy.uix.label import Label
-from fonts import RAYIAM_FONT
+from fonts import RAYSSO_FONT
 from src.action import Action
 
 
@@ -11,7 +11,7 @@ class LocalMSGLabel(Label):
             "text": "本地数据库配置",
             "size_hint": [0.6, 0.2],
             "pos_hint": {"x": 0.2, "y": 0.8},
-            "font_name": RAYIAM_FONT,
+            "font_name": RAYSSO_FONT,
             "font_size": 30,
             "color": [1, 0, 0, 1],
             "halign": "center",
@@ -26,7 +26,7 @@ class LocalUserLabel(Label):
             "text": "用户名：",
             "size_hint": [0.2, 0.1],
             "pos_hint": {"x": 0.05, "y": 0.7},
-            "font_name": RAYIAM_FONT,
+            "font_name": RAYSSO_FONT,
             "font_size": 21,
             "color": [1, 1, 0, 1],
             "halign": "center",
@@ -41,7 +41,7 @@ class LocalUserTextInput(TextInput):
             "hint_text": "请输入用户名。。。",
             "size_hint": [0.2, 0.1],
             "pos_hint": {"x": 0.25, "y": 0.7},
-            "font_name": RAYIAM_FONT,
+            "font_name": RAYSSO_FONT,
             "font_size": 21,
             "background_color": [0, 0, 0, 0.5],
             "foreground_color": [1, 0, 1, 1]
@@ -55,7 +55,7 @@ class LocalPwdLabel(Label):
             "text": "密码：",
             "size_hint": [0.2, 0.1],
             "pos_hint": {"x": 0.55, "y": 0.7},
-            "font_name": RAYIAM_FONT,
+            "font_name": RAYSSO_FONT,
             "font_size": 21,
             "color": [1, 1, 0, 1],
             "halign": "center",
@@ -71,7 +71,7 @@ class LocalPwdTextInput(TextInput):
             "hint_text": "请输入密码。。。",
             "size_hint": [0.2, 0.1],
             "pos_hint": {"x": 0.75, "y": 0.7},
-            "font_name": RAYIAM_FONT,
+            "font_name": RAYSSO_FONT,
             "font_size": 21,
             "background_color": [0, 0, 0, 0.5],
             "foreground_color": [1, 0, 1, 1]
@@ -85,7 +85,7 @@ class LocalHostLabel(Label):
             "text": "IP地址：",
             "size_hint": [0.2, 0.1],
             "pos_hint": {"x": 0.05, "y": 0.55},
-            "font_name": RAYIAM_FONT,
+            "font_name": RAYSSO_FONT,
             "font_size": 21,
             "color": [1, 1, 0, 1],
             "halign": "center",
@@ -100,7 +100,7 @@ class LocalHostTextInput(TextInput):
             "hint_text": "请输入IP地址。。。",
             "size_hint": [0.2, 0.1],
             "pos_hint": {"x": 0.25, "y": 0.55},
-            "font_name": RAYIAM_FONT,
+            "font_name": RAYSSO_FONT,
             "font_size": 21,
             "background_color": [0, 0, 0, 0.5],
             "foreground_color": [1, 0, 1, 1]
@@ -114,7 +114,7 @@ class LocalPortLabel(Label):
             "text": "端口：",
             "size_hint": [0.2, 0.1],
             "pos_hint": {"x": 0.55, "y": 0.55},
-            "font_name": RAYIAM_FONT,
+            "font_name": RAYSSO_FONT,
             "font_size": 21,
             "color": [1, 1, 0, 1],
             "halign": "center",
@@ -129,7 +129,7 @@ class LocalPortTextInput(TextInput):
             "hint_text": "请输入端口。。。",
             "size_hint": [0.2, 0.1],
             "pos_hint": {"x": 0.75, "y": 0.55},
-            "font_name": RAYIAM_FONT,
+            "font_name": RAYSSO_FONT,
             "font_size": 21,
             "background_color": [0, 0, 0, 0.5],
             "foreground_color": [1, 0, 1, 1]
@@ -143,7 +143,7 @@ class LocalDBLabel(Label):
             "text": "数据库名称：",
             "size_hint": [0.2, 0.1],
             "pos_hint": {"x": 0.05, "y": 0.4},
-            "font_name": RAYIAM_FONT,
+            "font_name": RAYSSO_FONT,
             "font_size": 21,
             "color": [1, 1, 0, 1],
             "halign": "center",
@@ -158,7 +158,7 @@ class LocalDBTextInput(TextInput):
             "hint_text": "请输入数据库名称。。。",
             "size_hint": [0.2, 0.1],
             "pos_hint": {"x": 0.25, "y": 0.4},
-            "font_name": RAYIAM_FONT,
+            "font_name": RAYSSO_FONT,
             "font_size": 21,
             "background_color": [0, 0, 0, 0.5],
             "foreground_color": [1, 0, 1, 1]
@@ -172,7 +172,7 @@ class LocalCharsetLabel(Label):
             "text": "编码方式：",
             "size_hint": [0.2, 0.1],
             "pos_hint": {"x": 0.55, "y": 0.4},
-            "font_name": RAYIAM_FONT,
+            "font_name": RAYSSO_FONT,
             "font_size": 21,
             "color": [1, 1, 0, 1],
             "halign": "center",
@@ -187,7 +187,7 @@ class LocalCharsetTextInput(TextInput):
             "hint_text": "请输入编码方式。。。",
             "size_hint": [0.2, 0.1],
             "pos_hint": {"x": 0.75, "y": 0.4},
-            "font_name": RAYIAM_FONT,
+            "font_name": RAYSSO_FONT,
             "font_size": 21,
             "background_color": [0, 0, 0, 0.5],
             "foreground_color": [1, 0, 1, 1]
@@ -201,7 +201,7 @@ class LocalSaveButton(Button):
             "text": "保存",
             "size_hint": [0.3, 0.125],
             "pos_hint": {"x": 0.35, "y": 0.2},
-            "font_name": RAYIAM_FONT,
+            "font_name": RAYSSO_FONT,
             "font_size": 30,
             "background_color": [0.247, 0.195, 0.24, 0.5]
         })
@@ -231,7 +231,7 @@ class LocalReturnButton(Button):
             "text": "返回",
             "size_hint": [0.3, 0.125],
             "pos_hint": {"x": 0.35, "y": 0.05},
-            "font_name": RAYIAM_FONT,
+            "font_name": RAYSSO_FONT,
             "font_size": 30,
             "background_color": [0.247, 0.195, 0.24, 0.5]
         })

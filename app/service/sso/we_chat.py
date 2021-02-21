@@ -3,7 +3,7 @@ from ...lib.cache.redis import CacheRedis
 from .. import Service
 
 
-class ServiceIamWeChat(Service):
+class ServiceSSOWeChat(Service):
     def __init__(self):
         super().__init__()
 

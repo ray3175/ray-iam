@@ -1,13 +1,13 @@
 from threading import Thread
 import requests
 from ...lib.cache.redis import CacheRedis
-from ...common.hash import RayIamHash
+from ...common.hash import RaySSOHash
 from .. import Service
 from ..user import ServiceUser
 from ..project import ServiceProject
 
 
-class ServiceIamAuth(Service):
+class ServiceSSOAuth(Service):
     def __init__(self):
         super().__init__()
 
@@ -35,8 +35,8 @@ class ServiceIamAuth(Service):
             call = call()
         return call
 
-    def iam_auth(self, account, password):
-        hash_account = RayIamHash(salt=password).encrypt(account)
+    def sso_auth(self, account, password):
+        hash_account = RaySSOHash(salt=password).encrypt(account)
         return hash_account if (user:=self.get_user_with_hash_account(hash_account, lambda : user if (user:=ServiceUser().get_user_with_account(account)) and user["password"]==password else None)) else user
 
     def active_hash_account_to_all_project(self, hash_account, user):

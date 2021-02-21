@@ -4,12 +4,12 @@ from ...lib.flask.decorator import json_content_type
 from ...lib.flask.response import response
 from ...lib.flask.value_transform import ValueTransform
 from ...service.user import ServiceUser
-from ...service.iam.user import ServiceIamUser
-from .. import iam_blueprint
+from ...service.sso.user import ServiceSSOUser
+from .. import sso_blueprint
 from ._auth import auth
 
 
-@iam_blueprint.route("/user", methods=["GET", "POST", "PUT", "DELETE"])
+@sso_blueprint.route("/user", methods=["GET", "POST", "PUT", "DELETE"])
 @cross_origin()
 @auth
 @json_content_type()
@@ -44,7 +44,7 @@ def user():
         nationality = data.get("nationality")
         phone = data.get("phone")
         mail = data.get("mail")
-        if ServiceIamUser().add_user(account, password, id_card, name, sex, birth_date, birth_place, native_place, nationality, phone, mail):
+        if ServiceSSOUser().add_user(account, password, id_card, name, sex, birth_date, birth_place, native_place, nationality, phone, mail):
             rsp["code"] = 200
             rsp["msg"] = "添加用户成功！"
     else:

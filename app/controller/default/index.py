@@ -11,7 +11,7 @@ def _index():
 
 @default_blueprint.route("/index", methods=["GET"])
 def index():
-    if ServiceAuth().ray_iam_auth(session.get("account"), session.get("password")):
+    if ServiceAuth().ray_sso_auth(session.get("account"), session.get("password")):
         return redirect_to_source("./platform/index.html")
     return redirect_to_source("./platform/login/index.html")
 

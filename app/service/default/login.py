@@ -7,4 +7,4 @@ class ServiceDefaultLogin(Service):
         super().__init__()
 
     def auth_verify(self, account, password):
-        return ServiceAuth().ray_iam_auth(account, password)
+        return ServiceAuth().ray_sso_auth(account, password)

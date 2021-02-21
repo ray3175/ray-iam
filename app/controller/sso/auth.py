@@ -3,24 +3,24 @@ from flask_cors import cross_origin
 from ...config import AppConfig
 from ...lib.flask.decorator import json_content_type
 from ...lib.flask.response import response
-from ...service.iam.auth import ServiceIamAuth
-from .. import iam_blueprint
+from ...service.sso.auth import ServiceSSOAuth
+from .. import sso_blueprint
 from ._auth import auth as _auth
 
 
 cookie_config = AppConfig().flask["cookie-config"]
 
 
-@iam_blueprint.route("/", methods=["GET"])
+@sso_blueprint.route("/", methods=["GET"])
 @cross_origin()
 def index():
     if not (_redirect:=request.args.get("redirect", "") or request.headers.get("Referer", "")):
         abort(401)
-    params = f"{'&' if '?' in _redirect else '?'}{cookie_config['key']}={hash_account}" if (hash_account:=request.cookies.get(cookie_config["key"])) and ServiceIamAuth().get_user_with_hash_account(hash_account) else ""
+    params = f"{'&' if '?' in _redirect else '?'}{cookie_config['key']}={hash_account}" if (hash_account:=request.cookies.get(cookie_config["key"])) and ServiceSSOAuth().get_user_with_hash_account(hash_account) else ""
     return redirect(_redirect + params)
 
 
-@iam_blueprint.route("/auth", methods=["GET", "POST"])
+@sso_blueprint.route("/auth", methods=["GET", "POST"])
 @cross_origin()
 @json_content_type()
 def auth():
@@ -30,7 +30,7 @@ def auth():
     }
     if not (hash_account:=request.args.get(cookie_config["key"]) if request.method == "GET" else request.get_json().get(cookie_config["key"])):
         abort(400)
-    if user:=ServiceIamAuth().get_user_with_hash_account(hash_account):
+    if user:=ServiceSSOAuth().get_user_with_hash_account(hash_account):
         rsp["code"] = 200
         rsp["msg"] = "用户认证成功！"
     else:
@@ -40,20 +40,20 @@ def auth():
     return response(**rsp)
 
 
-@iam_blueprint.route("/auth/login", methods=["GET"])
+@sso_blueprint.route("/auth/login", methods=["GET"])
 @cross_origin()
 @json_content_type()
 def auth_login():
     if not (_redirect:=request.args.get("redirect", "") or request.headers.get("Referer", "")):
         abort(401)
-    params = f"{'&' if '?' in _redirect else '?'}{cookie_config['key']}={hash_account}" if (account:=request.args.get("account")) and (password:=request.args.get("password")) and (hash_account:=ServiceIamAuth().iam_auth(account, password)) else ""
+    params = f"{'&' if '?' in _redirect else '?'}{cookie_config['key']}={hash_account}" if (account:=request.args.get("account")) and (password:=request.args.get("password")) and (hash_account:=ServiceSSOAuth().sso_auth(account, password)) else ""
     rsp = make_response(redirect(_redirect + params))
     if hash_account:
         rsp.set_cookie(value=hash_account, **cookie_config)
     return rsp
 
 
-@iam_blueprint.route("/auth/account", methods=["GET", "POST"])
+@sso_blueprint.route("/auth/account", methods=["GET", "POST"])
 @cross_origin()
 @json_content_type()
 def auth_account():
@@ -70,7 +70,7 @@ def auth_account():
         password = data.get("password")
     if not (account and password):
         abort(400)
-    if hash_account:=ServiceIamAuth().iam_auth(account, password):
+    if hash_account:=ServiceSSOAuth().sso_auth(account, password):
         rsp["code"] = 200
         rsp["msg"] = f"获取用户{cookie_config['key']}成功！"
         rsp["data"] = hash_account
@@ -80,7 +80,7 @@ def auth_account():
     return response(**rsp)
 
 
-@iam_blueprint.route("/login", methods=["GET", "POST"])
+@sso_blueprint.route("/login", methods=["GET", "POST"])
 @cross_origin()
 @_auth
 @json_content_type()
@@ -91,8 +91,8 @@ def login():
     }
     if not (hash_account:=request.args.get(cookie_config["key"]) if request.method == "GET" else request.get_json().get(cookie_config["key"])):
         abort(400)
-    if (service_iam_auth:=ServiceIamAuth()) and (user:=service_iam_auth.get_user_with_hash_account(hash_account)):
-        if service_iam_auth.active_hash_account_to_all_project(hash_account, user):
+    if (service_sso_auth:=ServiceSSOAuth()) and (user:=service_sso_auth.get_user_with_hash_account(hash_account)):
+        if service_sso_auth.active_hash_account_to_all_project(hash_account, user):
             rsp["code"] = 202
             rsp["msg"] = "已激活！"
     else:
@@ -101,7 +101,7 @@ def login():
     return response(**rsp)
 
 
-@iam_blueprint.route("/logout", methods=["GET", "POST"])
+@sso_blueprint.route("/logout", methods=["GET", "POST"])
 @cross_origin()
 @_auth
 @json_content_type()
@@ -112,7 +112,7 @@ def logout():
     }
     if not (hash_account:=request.args.get(cookie_config["key"]) if request.method == "GET" else request.get_json().get(cookie_config["key"])):
         abort(400)
-    if ServiceIamAuth().logout_hash_account_to_all_project(hash_account):
+    if ServiceSSOAuth().logout_hash_account_to_all_project(hash_account):
         rsp["code"] = 202
         rsp["msg"] = "已注销！"
     return response(**rsp)

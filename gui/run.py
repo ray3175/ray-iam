@@ -9,13 +9,13 @@ from kivy.app import App
 from root import RootLayout
 
 
-class RayIamApp(App):
+class RaySSOApp(App):
     def build(self):
         self.root = RootLayout()
         return self.root
 
 
 if __name__ == '__main__':
-    x = RayIamApp()
+    x = RaySSOApp()
     x.run()
 

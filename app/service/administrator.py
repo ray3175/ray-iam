@@ -16,14 +16,14 @@ class ServiceAdministrator(Service):
     def get_administrator_with_account(self, account):
         return (administrator:=self.dao.get_administrator_with_account(account)) and administrator()
 
-    @CacheMemory().cache("ray-iam-administrator", "account")
+    @CacheMemory().cache("ray-sso-administrator", "account")
     def get_administrator_with_user_priority_cache_memory(self, account):
         return self.get_administrator_with_account(account)
 
-    def ray_iam_auth(self, account, password):
+    def ray_sso_auth(self, account, password):
         return (administrator:=self.get_administrator_with_user_priority_cache_memory(account)) and administrator["password"] == password
 
-    def ray_iam_max_auth(self, account, auth=99):
+    def ray_sso_max_auth(self, account, auth=99):
         return (administrator:=self.get_administrator_with_user_priority_cache_memory(account)) and administrator["auth"] >= auth
 
 

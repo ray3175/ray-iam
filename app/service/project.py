@@ -12,6 +12,6 @@ class ServiceProject(Service):
         return (project:=self.dao.get_project(_id)) and project()
 
     @Session.transaction(auto_commit=False)
-    def project_iam_auth(self, name, auth_code):
+    def project_sso_auth(self, name, auth_code):
         return self.dao.get_project_with_name_auth_code(name, auth_code)
 

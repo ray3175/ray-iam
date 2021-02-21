@@ -5,7 +5,7 @@ flask: &flask
   debug: true
 
 flask-config: &flask-config
-  SECRET_KEY: ray-iam
+  SECRET_KEY: ray-sso
   PERMANENT_SESSION_LIFETIME:
     days: 1
 
@@ -26,7 +26,7 @@ environment-product:
     debug: false
     <<: *flask
   flask-config:
-    SECRET_KEY: ray-iam
+    SECRET_KEY: ray-sso
     <<: *flask-config
   cookie-config:
     <<: *cookie-config

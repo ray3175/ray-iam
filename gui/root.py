@@ -1,7 +1,7 @@
 from kivy.graphics import BorderImage
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
-from fonts import RAYIAM_FONT
+from fonts import RAYSSO_FONT
 from local_data_config import LocalMSGLabel, LocalUserLabel, LocalUserTextInput, LocalPwdLabel, LocalPwdTextInput, LocalHostLabel, LocalHostTextInput, LocalPortLabel, LocalPortTextInput, LocalDBLabel, LocalDBTextInput, LocalCharsetLabel, LocalCharsetTextInput, LocalSaveButton, LocalReturnButton
 from remote_data_config import RemoteMSGLabel, RemoteUserLabel, RemoteUserTextInput,RemotePwdLabel, RemotePwdTextInput, RemoteHostLabel, RemoteHostTextInput, RemotePortLabel, RemotePortTextInput, RemoteDBLabel, RemoteDBTextInput, RemoteCharsetLabel, RemoteCharsetTextInput, RemoteSaveButton, RemoteReturnButton
 from migrate_action import TerminalLayout, StartButton, ReturnButton
@@ -14,7 +14,7 @@ class LocalDataConfigButton(Button):
             "text": "本地数据库配置",
             "size_hint": [0.2, 0.1],
             "pos_hint": {"x": 0.1, "y": 0.7},
-            "font_name": RAYIAM_FONT,
+            "font_name": RAYSSO_FONT,
             "font_size": 21,
             "background_color": [0.69, 0.12, 0.240, 0.5]
         })
@@ -31,7 +31,7 @@ class RemoteDataConfigButton(Button):
             "text": "远程数据库配置",
             "size_hint": [0.2, 0.1],
             "pos_hint": {"x": 0.7, "y": 0.7},
-            "font_name": RAYIAM_FONT,
+            "font_name": RAYSSO_FONT,
             "font_size": 21,
             "background_color": [0.69, 0.12, 0.240, 0.5]
         })
@@ -48,7 +48,7 @@ class MigrateActionButton(Button):
             "text": "开始迁移",
             "size_hint": [0.3, 0.15],
             "pos_hint": {"x": 0.35, "y": 0.25},
-            "font_name": RAYIAM_FONT,
+            "font_name": RAYSSO_FONT,
             "font_size": 30,
             "background_color": [0.247, 0.195, 0.24, 0.5]
         })

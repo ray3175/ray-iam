@@ -17,7 +17,7 @@
 
 
     cmd：
-    python -m PyInstaller RayIam.spec
+    python -m PyInstaller RaySSO.spec
 """
 
 

@@ -7,5 +7,5 @@ class ServiceDefaultLogout(Service):
         super().__init__()
 
     def auth_verify(self, account):
-        return CacheMemory().memory.get("ray-iam-administrator", {}).pop(account, None)
+        return CacheMemory().memory.get("ray-sso-administrator", {}).pop(account, None)
 

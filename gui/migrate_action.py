@@ -2,14 +2,14 @@ import threading
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
-from fonts import RAYIAM_FONT
+from fonts import RAYSSO_FONT
 from src.action import Action
 
 
 class TerminalTextInput(TextInput):
     def __init__(self, **kwargs):
         kwargs.update({
-            "font_name": RAYIAM_FONT,
+            "font_name": RAYSSO_FONT,
             "font_size": 30,
             "background_color": [0, 0, 0, 0.5],
             "foreground_color": [1, 0, 1, 1]
@@ -52,7 +52,7 @@ class StartButton(Button):
             "text": "开始",
             "size_hint": [0.3, 0.125],
             "pos_hint": {"x": 0.15, "y": 0.05},
-            "font_name": RAYIAM_FONT,
+            "font_name": RAYSSO_FONT,
             "font_size": 30,
             "background_color": [0.247, 0.195, 0.24, 0.5]
         })
@@ -69,7 +69,7 @@ class ReturnButton(Button):
             "text": "返回",
             "size_hint": [0.3, 0.125],
             "pos_hint": {"x": 0.55, "y": 0.05},
-            "font_name": RAYIAM_FONT,
+            "font_name": RAYSSO_FONT,
             "font_size": 30,
             "background_color": [0.247, 0.195, 0.24, 0.5]
         })

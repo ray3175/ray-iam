@@ -6,7 +6,7 @@ block_cipher = None
 
 
 a = Analysis(['run.py'],
-             pathex=['D:\\self\\git\\ray-iam\\gui'],
+             pathex=['D:\\self\\git\\ray-sso\\gui'],
              binaries=[],
              datas=[],
              hiddenimports=[],
@@ -23,13 +23,13 @@ exe = EXE(pyz,
           a.scripts,
           [],
           exclude_binaries=True,
-          name='RayIam',
+          name='RaySSO',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
-          console=False , icon='ray-iam.ico')
-coll = COLLECT(exe, Tree('D:\\self\\git\\ray-iam\\gui\\'),
+          console=False , icon='ray-sso.ico')
+coll = COLLECT(exe, Tree('D:\\self\\git\\ray-sso\\gui\\'),
                a.binaries,
                a.zipfiles,
                a.datas,
@@ -37,4 +37,4 @@ coll = COLLECT(exe, Tree('D:\\self\\git\\ray-iam\\gui\\'),
                strip=False,
                upx=True,
                upx_exclude=[],
-               name='RayIam')
+               name='RaySSO')

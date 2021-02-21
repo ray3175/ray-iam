@@ -19,7 +19,7 @@ class DBConfig:
                 x.close()
         return config
 
-    def write_local_db(self, user, pwd, host="127.0.0.1", port="3306", db="ray_iam", charset="utf8mb4"):
+    def write_local_db(self, user, pwd, host="127.0.0.1", port="3306", db="ray_sso", charset="utf8mb4"):
         config = dict(
             user=user,
             pwd=pwd,
@@ -41,7 +41,7 @@ class DBConfig:
                 x.close()
         return config
 
-    def write_remote_db(self, user, pwd, host, port="3306", db="ray_iam", charset="utf8mb4"):
+    def write_remote_db(self, user, pwd, host, port="3306", db="ray_sso", charset="utf8mb4"):
         config = dict(
             user=user,
             pwd=pwd,

@@ -7,7 +7,7 @@ from ..phone import ServicePhone
 from ..mail import ServiceMail
 
 
-class ServiceIamUser(Service):
+class ServiceSSOUser(Service):
     def __init__(self):
         super().__init__()
 

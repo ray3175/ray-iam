@@ -13,7 +13,7 @@ from .db import DB
 class Action:
     DB_MODULES = [
         {
-            "name": "RayIam管理员",
+            "name": "RaySSO管理员",
             "module": Administrator
         },
         {
@@ -45,13 +45,13 @@ class Action:
     def __init__(self):
         self.__db_config = DBConfig()
 
-    def set_local_db_config(self, user, pwd, host="127.0.0.1", port="3306", db="ray_iam", charset="utf8mb4"):
+    def set_local_db_config(self, user, pwd, host="127.0.0.1", port="3306", db="ray_sso", charset="utf8mb4"):
         return self.__db_config.write_local_db(user, pwd, host, port, db, charset)
 
     def get_local_db_config(self):
         return self.__db_config.read_local_db()
 
-    def set_remote_db_config(self, user, pwd, host, port="3306", db="ray_iam", charset="utf8mb4"):
+    def set_remote_db_config(self, user, pwd, host, port="3306", db="ray_sso", charset="utf8mb4"):
         return self.__db_config.write_remote_db(user, pwd, host, port, db, charset)
 
     def get_remote_db_config(self):

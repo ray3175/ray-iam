@@ -5,7 +5,7 @@ from ..lib.database import DB
 class InitDB(DB):
     def create_database(self):
         connection = DB.engine.connect()
-        connection.execute("create database if not exists ray_iam default charset utf8mb4;")
+        connection.execute("create database if not exists ray_sso default charset utf8mb4;")
 
     def create_db(self):
         from .. import modules

@@ -2,7 +2,7 @@ import requests
 from xy.exception import XYException, XYInfo
 from ...config import AppConfig
 from ...lib.cache.redis import CacheRedis
-from ...common.hash import RayIamHash
+from ...common.hash import RaySSOHash
 from .. import Service
 from .user import ServiceWeChatUser
 
@@ -18,7 +18,7 @@ class ServiceWeChat(Service):
 
     @staticmethod
     def new_token(openid, session_key):
-        return RayIamHash(salt=session_key).encrypt(openid)
+        return RaySSOHash(salt=session_key).encrypt(openid)
 
     def we_chat_api_code2Session(self, code):
         config = self.__api["code2Session"]

@@ -8,15 +8,15 @@ class ServiceAuth(Service):
     def __init__(self):
         super().__init__()
 
-    def ray_iam_auth(self, account, password):
-        return ServiceAdministrator().ray_iam_auth(account, password)
+    def ray_sso_auth(self, account, password):
+        return ServiceAdministrator().ray_sso_auth(account, password)
 
-    def ray_iam_max_auth(self, account, auth=99):
-        return ServiceAdministrator().ray_iam_max_auth(account, auth)
+    def ray_sso_max_auth(self, account, auth=99):
+        return ServiceAdministrator().ray_sso_max_auth(account, auth)
 
-    def project_iam_auth_from_DB(self, name, auth_code):
-        return (project:=ServiceProject().project_iam_auth(name, auth_code)) and project()
+    def project_sso_auth_from_DB(self, name, auth_code):
+        return (project:=ServiceProject().project_sso_auth(name, auth_code)) and project()
 
     @CacheRedis().cache("project", "name")
-    def project_iam_auth(self, name, auth_code):
-        return self.project_iam_auth_from_DB(name, auth_code)
+    def project_sso_auth(self, name, auth_code):
+        return self.project_sso_auth_from_DB(name, auth_code)

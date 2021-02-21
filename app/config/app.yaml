@@ -3,7 +3,7 @@ token-config: &token-config
 
 hash: &hash
   hash_type: sha256
-  salt: ray-iam
+  salt: ray-sso
   iterations: 9
 
 

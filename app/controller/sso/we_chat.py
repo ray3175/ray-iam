@@ -3,15 +3,15 @@ from flask_cors import cross_origin
 from ...config import AppConfig
 from ...lib.flask.decorator import json_content_type
 from ...lib.flask.response import response
-from ...service.iam.we_chat import ServiceIamWeChat
-from .. import iam_blueprint
+from ...service.sso.we_chat import ServiceSSOWeChat
+from .. import sso_blueprint
 from ._auth import auth
 
 
 token_config = AppConfig().app["token-config"]
 
 
-@iam_blueprint.route("/we_chat", methods=["GET", "POST"])
+@sso_blueprint.route("/we_chat", methods=["GET", "POST"])
 @cross_origin()
 @auth
 @json_content_type()
@@ -22,7 +22,7 @@ def we_chat():
     }
     if not (token:=request.args.get(token_config["key"]) if request.method == "GET" else request.get_json().get(token_config["key"])):
         abort(400)
-    if data:=ServiceIamWeChat().get_we_chat_user_with_token(token):
+    if data:=ServiceSSOWeChat().get_we_chat_user_with_token(token):
         rsp["code"] = 200
         rsp["data"] = data
         rsp["msg"] = "该用户微信已登录成功！"
@@ -32,7 +32,7 @@ def we_chat():
     return response(**rsp)
 
 
-@iam_blueprint.route("/we_chat/logout", methods=["GET", "POST"])
+@sso_blueprint.route("/we_chat/logout", methods=["GET", "POST"])
 @cross_origin()
 @auth
 @json_content_type()
@@ -43,7 +43,7 @@ def we_chat_logout():
     }
     if not (token:=request.args.get(token_config["key"]) if request.method == "GET" else request.get_json().get(token_config["key"])):
         abort(400)
-    if data:=ServiceIamWeChat().logout_we_chat_user_with_token(token):
+    if data:=ServiceSSOWeChat().logout_we_chat_user_with_token(token):
         rsp["code"] = 200
         rsp["data"] = data
         rsp["msg"] = "该用户微信已登出成功！"
